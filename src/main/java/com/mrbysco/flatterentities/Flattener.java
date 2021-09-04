@@ -1,10 +1,13 @@
 package com.mrbysco.flatterentities;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
-import net.minecraft.entity.Entity;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.settings.PointOfView;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.RegistryKey;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3f;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
@@ -21,7 +24,7 @@ public class Flattener {
 	private static final List<RegistryKey<World>> dimensionBlacklist = new ArrayList<>();
 	private static boolean dimensionListIsWhitelist = false;
 
-	public static void prepareFlatRender(double x, double z, float f, MatrixStack poseStack, Entity entityIn) {
+	public static void prepareFlatRendering(float f, double x, double z, MatrixStack poseStack, LivingEntity entityIn) {
 		final EntityType<?> entityType = entityIn.getType();
 		final RegistryKey<World> entityDimension = entityIn.getEntityWorld().getDimensionKey();
 		final boolean entityInList = entityBlacklist.contains(entityIn.getType());
@@ -36,12 +39,35 @@ public class Flattener {
 		}
 
 		if (!entityBlacklisted && (dimensionFlat || renderAnyway)) {
-			double angle1 = Math.atan2(z, x) / Math.PI * 180.0D;
-			double angle2 = Math.floor((f - angle1) / 45.0D) * 45.0D;
+			double angle1 = MathHelper.wrapDegrees(Math.atan2(z, x) / Math.PI * 180.0D);
+			double angle2 = MathHelper.wrapDegrees(Math.floor((f - angle1) / 45.0D) * 45.0D);
+			final PointOfView viewPoint = Minecraft.getInstance().gameSettings.getPointOfView();
+			boolean isPlayer = entityIn == Minecraft.getInstance().player;
+			boolean changeForThirdPerson = !viewPoint.func_243192_a() && isPlayer;
 
-			poseStack.rotate(Vector3f.YP.rotationDegrees((float) angle1));
+			if(isPlayer) {
+				if(viewPoint == PointOfView.FIRST_PERSON || viewPoint == PointOfView.THIRD_PERSON_BACK) {
+					poseStack.rotate(Vector3f.YP.rotationDegrees(-90));
+				}
+				if(viewPoint == PointOfView.THIRD_PERSON_FRONT) {
+					poseStack.rotate(Vector3f.YP.rotationDegrees(90));
+				}
+			} else {
+				poseStack.rotate(Vector3f.YP.rotationDegrees((float) angle1));
+			}
+
 			poseStack.scale(0.02F, 1.0F, 1.0F);
-			poseStack.rotate(Vector3f.YP.rotationDegrees((float) angle2));
+
+			if(isPlayer) {
+				if(viewPoint == PointOfView.FIRST_PERSON || viewPoint == PointOfView.THIRD_PERSON_BACK) {
+					poseStack.rotate(Vector3f.YP.rotationDegrees(90));
+				}
+				if(viewPoint == PointOfView.THIRD_PERSON_FRONT) {
+					poseStack.rotate(Vector3f.YP.rotationDegrees(-90));
+				}
+			} else {
+				poseStack.rotate(Vector3f.YP.rotationDegrees((float) angle2));
+			}
 		}
 	}
 

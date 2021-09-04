@@ -2,10 +2,12 @@ package com.mrbysco.flatterentities.mixin;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mrbysco.flatterentities.Flattener;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.entity.LivingRenderer;
 import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.MathHelper;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -44,6 +46,15 @@ public class LivingRendererMixin<T extends LivingEntity, M extends EntityModel<T
 				f += f3 * 0.2F;
 			}
 		}
-		Flattener.prepareFlatRender(entityIn.getPosX(), entityIn.getPosZ(), f, matrixStackIn, entityIn);
+		double x = entityIn.getPosX();
+		double z = entityIn.getPosZ();
+
+		PlayerEntity player = Minecraft.getInstance().player;
+		if(player != null) {
+			x -= player.getPosX();
+			z -= player.getPosZ();
+		}
+
+		Flattener.prepareFlatRendering(f, x, z, matrixStackIn, entityIn);
 	}
 }
