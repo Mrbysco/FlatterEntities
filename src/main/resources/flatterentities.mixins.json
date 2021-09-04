@@ -1,0 +1,14 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.mrbysco.flatterentities.mixin",
+  "refmap": "flatterentities.refmap.json",
+  "target": "@env(DEFAULT)",
+  "compatibilityLevel": "JAVA_8",
+  "client": [
+	"LivingRendererMixin"
+  ],
+  "injectors": {
+	"defaultRequire": 1
+  }
+}

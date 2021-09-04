@@ -1,0 +1,20 @@
+modLoader="javafml"
+loaderVersion="[36,)"
+issueTrackerURL="https://github.com/Mrbysco/flatterentities"
+license="GNU Lesser General Public License v3.0"
+
+[[mods]]
+modId="flatterentities"
+version="${file.jarVersion}"
+displayName="Flatter Entities"
+displayURL="https://www.curseforge.com/minecraft/mc-mods/flatter-entities"
+authors="Mrbysco"
+description='''
+Entities but more flat
+'''
+[[dependencies.flatterentities]]
+modId="minecraft"
+mandatory=true
+versionRange="[1.16.5,1.17)"
+ordering="NONE"
+side="CLIENT"
