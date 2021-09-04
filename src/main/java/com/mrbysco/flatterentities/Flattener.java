@@ -26,7 +26,7 @@ public class Flattener {
 		final RegistryKey<World> entityDimension = entityIn.getEntityWorld().getDimensionKey();
 		final boolean entityInList = entityBlacklist.contains(entityIn.getType());
 		final boolean worldInList = dimensionBlacklist.contains(entityDimension);
-		boolean entityBlacklisted = entityBlacklist.isEmpty() || (!entityBlacklist.isEmpty() && entityInList);
+		boolean entityBlacklisted = !entityBlacklist.isEmpty() && entityInList;
 		boolean dimensionFlat = dimensionBlacklist.isEmpty() || (!dimensionBlacklist.isEmpty() && dimensionListIsWhitelist == worldInList);
 		boolean renderAnyway = false;
 

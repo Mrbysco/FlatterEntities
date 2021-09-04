@@ -53,7 +53,11 @@ public class FlatConfig {
 		boolean flag = object instanceof String;
 		if(flag) {
 			String value = (String) object;
-			return ResourceLocation.tryCreate(value) != null;
+			if(value.isEmpty()) {
+				return true;
+			} else {
+				return ResourceLocation.tryCreate(value) != null;
+			}
 		}
 		return false;
 	}
