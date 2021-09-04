@@ -27,19 +27,19 @@ public class FlatConfig {
 					.comment("A list of entities that won't show flat ever [Syntax: \"modid:entity\" ]\n" +
 							"[Example: \"minecraft:cow\"]")
 					.defineListAllowEmpty(Collections.singletonList("entityBlacklist"), () -> Collections.singletonList(""),
-							(o) -> isValidResourceLocation(o));
+							FlatConfig::isValidResourceLocation);
 
 			entityDimensionWhitelist = builder
 					.comment("A list of entities that will show flat even when a dimension is blacklisted [Syntax: \"modid:entity,modid:dimension\" ]\n" +
 							"[Example: \"minecraft:bee,minecraft:the_nether\"]")
 					.defineListAllowEmpty(Collections.singletonList("entityDimensionWhitelist"), () -> Collections.singletonList(""),
-							(o) -> isValidOption(o));
+							FlatConfig::isValidOption);
 
 			dimensionBlacklist = builder
 					.comment("A list of dimensions that won't have flat entities [Syntax: \"modid:dimension\" ]\n" +
 							"[Example: \"minecraft:the_nether\"]")
 					.defineListAllowEmpty(Collections.singletonList("dimensionBlacklist"), () -> Collections.singletonList(""),
-							(o) -> isValidResourceLocation(o));
+							FlatConfig::isValidResourceLocation);
 
 			invertDimensionBlacklist = builder
 					.comment("Invert the Dimension Blacklist")
