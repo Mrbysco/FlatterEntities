@@ -14,8 +14,8 @@ apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'org.spongepowered.mixin'
 
 version = "${version}"
-group = 'com.mrbysco.EXAMPLE' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
-archivesBaseName = "ExampleMod-${mc_version}"
+group = 'com.mrbysco.flatterentities' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+archivesBaseName = "FlatterEntities-${mc_version}"
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(8) // Mojang ships Java 8 to end users, so your mod should target Java 8.
 
