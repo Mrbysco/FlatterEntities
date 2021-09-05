@@ -31,19 +31,21 @@ public class BoatRendererMixin<T extends BoatEntity> {
 			final Entity passenger = entityIn.getPassengers().get(0);
 			if(passenger instanceof LivingEntity) {
 				final LivingEntity rider = (LivingEntity) passenger;
-				final String s = TextFormatting.getTextWithoutFormattingCodes(rider.getHeldItemMainhand().getDisplayName().getString());
-				if(rider.getHeldItemMainhand().hasDisplayName() && s.equals("Float")) {
-					final float f = MathHelper.lerp(partialTicks, entityIn.prevRotationYaw, entityIn.rotationYaw);
-					double x = entityIn.getPosX();
-					double z = entityIn.getPosZ();
+				if(rider.getHeldItemMainhand().hasDisplayName()) {
+					final String s = TextFormatting.getTextWithoutFormattingCodes(rider.getHeldItemMainhand().getDisplayName().getString());
+					if(s != null && s.equals("Float")) {
+						final float f = MathHelper.lerp(partialTicks, entityIn.prevRotationYaw, entityIn.rotationYaw);
+						double x = entityIn.getPosX();
+						double z = entityIn.getPosZ();
 
-					final PlayerEntity player = Minecraft.getInstance().player;
-					if(player != null) {
-						x -= player.getPosX();
-						z -= player.getPosZ();
+						final PlayerEntity player = Minecraft.getInstance().player;
+						if(player != null) {
+							x -= player.getPosX();
+							z -= player.getPosZ();
+						}
+
+						Flattener.prepareFlatRendering(f, x, z, matrixStackIn, entityIn);
 					}
-
-					Flattener.prepareFlatRendering(f, x, z, matrixStackIn, entityIn);
 				}
 			}
 		}

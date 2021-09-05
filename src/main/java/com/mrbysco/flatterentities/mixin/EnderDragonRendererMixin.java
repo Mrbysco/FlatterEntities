@@ -17,7 +17,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 @Mixin(EnderDragonRenderer.class)
-public class EnderDragonRendererMixin<T extends LivingEntity> {
+public class EnderDragonRendererMixin {
 
 	@Inject(method = "render(Lnet/minecraft/entity/boss/dragon/EnderDragonEntity;FFLcom/mojang/blaze3d/matrix/MatrixStack;Lnet/minecraft/client/renderer/IRenderTypeBuffer;I)V",
 			locals = LocalCapture.CAPTURE_FAILEXCEPTION, at = @At(

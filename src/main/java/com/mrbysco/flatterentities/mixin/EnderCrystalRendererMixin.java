@@ -18,7 +18,7 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 @Mixin(EnderCrystalRenderer.class)
 public class EnderCrystalRendererMixin<T extends EnderCrystalEntity> {
 
-	@Inject(method = "Lnet/minecraft/client/renderer/entity/EnderCrystalRenderer;render(Lnet/minecraft/entity/item/EnderCrystalEntity;FFLcom/mojang/blaze3d/matrix/MatrixStack;Lnet/minecraft/client/renderer/IRenderTypeBuffer;I)V",
+	@Inject(method = "render(Lnet/minecraft/entity/item/EnderCrystalEntity;FFLcom/mojang/blaze3d/matrix/MatrixStack;Lnet/minecraft/client/renderer/IRenderTypeBuffer;I)V",
 			locals = LocalCapture.CAPTURE_FAILEXCEPTION, at = @At(
 			value = "INVOKE",
 			target = "Lcom/mojang/blaze3d/matrix/MatrixStack;translate(DDD)V",
