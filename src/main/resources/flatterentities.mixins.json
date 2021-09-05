@@ -6,7 +6,17 @@
   "target": "@env(DEFAULT)",
   "compatibilityLevel": "JAVA_8",
   "client": [
-	"LivingRendererMixin"
+	"LivingRendererMixin",
+	"EnderDragonRendererMixin",
+	"EnderCrystalRendererMixin",
+	"EvokerFangsRendererMixin",
+	"ShulkerBulletRendererMixin",
+	"LlamaSpitRendererMixin",
+	"TntRendererMixin",
+	"ItemRendererMixin",
+	"TridentRendererMixin",
+	"MinecartRendererMixin",
+	"BoatRendererMixin"
   ],
   "injectors": {
 	"defaultRequire": 1

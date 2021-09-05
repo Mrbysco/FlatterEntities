@@ -3,6 +3,7 @@ package com.mrbysco.flatterentities;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.PointOfView;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.RegistryKey;
@@ -24,7 +25,7 @@ public class Flattener {
 	private static final List<RegistryKey<World>> dimensionBlacklist = new ArrayList<>();
 	private static boolean dimensionListIsWhitelist = false;
 
-	public static void prepareFlatRendering(float f, double x, double z, MatrixStack poseStack, LivingEntity entityIn) {
+	public static void prepareFlatRendering(float f, double x, double z, MatrixStack poseStack, Entity entityIn) {
 		final EntityType<?> entityType = entityIn.getType();
 		final RegistryKey<World> entityDimension = entityIn.getEntityWorld().getDimensionKey();
 		final boolean entityInList = entityBlacklist.contains(entityIn.getType());
@@ -43,7 +44,11 @@ public class Flattener {
 			double angle2 = MathHelper.wrapDegrees(Math.floor((f - angle1) / 45.0D) * 45.0D);
 			final PointOfView viewPoint = Minecraft.getInstance().gameSettings.getPointOfView();
 			boolean isPlayer = entityIn == Minecraft.getInstance().player;
-			float offset = MathHelper.wrapDegrees(entityIn.rotationYawHead - entityIn.prevRotationYawHead);
+			float offset = 0;
+			if(isPlayer && entityIn instanceof LivingEntity) {
+				LivingEntity livingEntity = (LivingEntity)entityIn;
+				offset = MathHelper.wrapDegrees(livingEntity.rotationYawHead - livingEntity.prevRotationYawHead);
+			}
 
 			if(isPlayer) {
 				if(viewPoint == PointOfView.FIRST_PERSON || viewPoint == PointOfView.THIRD_PERSON_BACK) {

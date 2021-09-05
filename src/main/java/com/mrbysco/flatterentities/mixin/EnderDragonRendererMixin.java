@@ -4,8 +4,9 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mrbysco.flatterentities.Flattener;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
-import net.minecraft.client.renderer.entity.LivingRenderer;
+import net.minecraft.client.renderer.entity.EnderDragonRenderer;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.boss.dragon.EnderDragonEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.MathHelper;
 import org.spongepowered.asm.mixin.Mixin;
@@ -15,16 +16,15 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
-@Mixin(LivingRenderer.class)
-public class LivingRendererMixin<T extends LivingEntity> {
+@Mixin(EnderDragonRenderer.class)
+public class EnderDragonRendererMixin<T extends LivingEntity> {
 
-	@Inject(method = "render(Lnet/minecraft/entity/LivingEntity;FFLcom/mojang/blaze3d/matrix/MatrixStack;Lnet/minecraft/client/renderer/IRenderTypeBuffer;I)V",
+	@Inject(method = "render(Lnet/minecraft/entity/boss/dragon/EnderDragonEntity;FFLcom/mojang/blaze3d/matrix/MatrixStack;Lnet/minecraft/client/renderer/IRenderTypeBuffer;I)V",
 			locals = LocalCapture.CAPTURE_FAILEXCEPTION, at = @At(
 			value = "INVOKE",
-			target = "Lcom/mojang/blaze3d/matrix/MatrixStack;translate(DDD)V",
-			shift = Shift.AFTER,
-			ordinal = 1))
-	public void flatterRender(T entityIn, float entityYaw, float partialTicks, MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int packedLightIn, CallbackInfo cir) {
+			target = "Lnet/minecraft/client/renderer/entity/EnderDragonRenderer$EnderDragonModel;setLivingAnimations(Lnet/minecraft/entity/boss/dragon/EnderDragonEntity;FFF)V",
+			shift = Shift.AFTER))
+	public void flatterRender(EnderDragonEntity entityIn, float entityYaw, float partialTicks, MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int packedLightIn, CallbackInfo ci) {
 		float f = MathHelper.interpolateAngle(partialTicks, entityIn.prevRenderYawOffset, entityIn.renderYawOffset);
 
 		final boolean shouldSit = entityIn.isPassenger() && (entityIn.getRidingEntity() != null && entityIn.getRidingEntity().shouldRiderSit());
