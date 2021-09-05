@@ -20,58 +20,62 @@ import java.util.List;
 import java.util.Map;
 
 public class Flattener {
+	public static boolean renderingEnabled = true;
+
 	private static final List<EntityType<?>> entityBlacklist = new ArrayList<>();
 	private static final Map<RegistryKey<World>, List<EntityType<?>>> entityDimensionWhitelist = new HashMap<>();
 	private static final List<RegistryKey<World>> dimensionBlacklist = new ArrayList<>();
 	private static boolean dimensionListIsWhitelist = false;
 
 	public static void prepareFlatRendering(float f, double x, double z, MatrixStack poseStack, Entity entityIn) {
-		final EntityType<?> entityType = entityIn.getType();
-		final RegistryKey<World> entityDimension = entityIn.getEntityWorld().getDimensionKey();
-		final boolean entityInList = entityBlacklist.contains(entityIn.getType());
-		final boolean worldInList = dimensionBlacklist.contains(entityDimension);
-		boolean entityBlacklisted = !entityBlacklist.isEmpty() && entityInList;
-		boolean dimensionFlat = dimensionBlacklist.isEmpty() || (!dimensionBlacklist.isEmpty() && dimensionListIsWhitelist == worldInList);
-		boolean renderAnyway = false;
+		if(renderingEnabled) {
+			final EntityType<?> entityType = entityIn.getType();
+			final RegistryKey<World> entityDimension = entityIn.getEntityWorld().getDimensionKey();
+			final boolean entityInList = entityBlacklist.contains(entityIn.getType());
+			final boolean worldInList = dimensionBlacklist.contains(entityDimension);
+			boolean entityBlacklisted = !entityBlacklist.isEmpty() && entityInList;
+			boolean dimensionFlat = dimensionBlacklist.isEmpty() || (!dimensionBlacklist.isEmpty() && dimensionListIsWhitelist == worldInList);
+			boolean renderAnyway = false;
 
-		if(!dimensionBlacklist.isEmpty() && !entityDimensionWhitelist.isEmpty()) {
-			List<EntityType<?>> whitelist = entityDimensionWhitelist.getOrDefault(entityDimension, new ArrayList<>());
-			renderAnyway = whitelist.contains(entityType) && !entityBlacklisted;
-		}
-
-		if (!entityBlacklisted && (dimensionFlat || renderAnyway)) {
-			double angle1 = MathHelper.wrapDegrees(Math.atan2(z, x) / Math.PI * 180.0D);
-			double angle2 = MathHelper.wrapDegrees(Math.floor((f - angle1) / 45.0D) * 45.0D);
-			final PointOfView viewPoint = Minecraft.getInstance().gameSettings.getPointOfView();
-			boolean isPlayer = entityIn == Minecraft.getInstance().player;
-			float offset = 0;
-			if(isPlayer && entityIn instanceof LivingEntity) {
-				LivingEntity livingEntity = (LivingEntity)entityIn;
-				offset = MathHelper.wrapDegrees(livingEntity.rotationYawHead - livingEntity.prevRotationYawHead);
+			if(!dimensionBlacklist.isEmpty() && !entityDimensionWhitelist.isEmpty()) {
+				List<EntityType<?>> whitelist = entityDimensionWhitelist.getOrDefault(entityDimension, new ArrayList<>());
+				renderAnyway = whitelist.contains(entityType) && !entityBlacklisted;
 			}
 
-			if(isPlayer) {
-				if(viewPoint == PointOfView.FIRST_PERSON || viewPoint == PointOfView.THIRD_PERSON_BACK) {
-					poseStack.rotate(Vector3f.YP.rotationDegrees(-90.0F - offset));
+			if (!entityBlacklisted && (dimensionFlat || renderAnyway)) {
+				double angle1 = MathHelper.wrapDegrees(Math.atan2(z, x) / Math.PI * 180.0D);
+				double angle2 = MathHelper.wrapDegrees(Math.floor((f - angle1) / 45.0D) * 45.0D);
+				final PointOfView viewPoint = Minecraft.getInstance().gameSettings.getPointOfView();
+				boolean isPlayer = entityIn == Minecraft.getInstance().player;
+				float offset = 0;
+				if(isPlayer && entityIn instanceof LivingEntity) {
+					LivingEntity livingEntity = (LivingEntity)entityIn;
+					offset = MathHelper.wrapDegrees(livingEntity.rotationYawHead - livingEntity.prevRotationYawHead);
 				}
-				if(viewPoint == PointOfView.THIRD_PERSON_FRONT) {
-					poseStack.rotate(Vector3f.YP.rotationDegrees(90 + offset));
-				}
-			} else {
-				poseStack.rotate(Vector3f.YP.rotationDegrees((float) angle1));
-			}
 
-			poseStack.scale(0.02F, 1.0F, 1.0F);
+				if(isPlayer) {
+					if(viewPoint == PointOfView.FIRST_PERSON || viewPoint == PointOfView.THIRD_PERSON_BACK) {
+						poseStack.rotate(Vector3f.YP.rotationDegrees(-90.0F - offset));
+					}
+					if(viewPoint == PointOfView.THIRD_PERSON_FRONT) {
+						poseStack.rotate(Vector3f.YP.rotationDegrees(90 + offset));
+					}
+				} else {
+					poseStack.rotate(Vector3f.YP.rotationDegrees((float) angle1));
+				}
 
-			if(isPlayer) {
-				if(viewPoint == PointOfView.FIRST_PERSON || viewPoint == PointOfView.THIRD_PERSON_BACK) {
-					poseStack.rotate(Vector3f.YP.rotationDegrees(90 + offset));
+				poseStack.scale(0.02F, 1.0F, 1.0F);
+
+				if(isPlayer) {
+					if(viewPoint == PointOfView.FIRST_PERSON || viewPoint == PointOfView.THIRD_PERSON_BACK) {
+						poseStack.rotate(Vector3f.YP.rotationDegrees(90 + offset));
+					}
+					if(viewPoint == PointOfView.THIRD_PERSON_FRONT) {
+						poseStack.rotate(Vector3f.YP.rotationDegrees(-90 - offset));
+					}
+				} else {
+					poseStack.rotate(Vector3f.YP.rotationDegrees((float) angle2));
 				}
-				if(viewPoint == PointOfView.THIRD_PERSON_FRONT) {
-					poseStack.rotate(Vector3f.YP.rotationDegrees(-90 - offset));
-				}
-			} else {
-				poseStack.rotate(Vector3f.YP.rotationDegrees((float) angle2));
 			}
 		}
 	}

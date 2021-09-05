@@ -53,8 +53,6 @@ public class GeoEntityRendererMixin<T extends LivingEntity> {
 			z -= player.getPosZ();
 		}
 
-		System.out.println("hey");
-
 		Flattener.prepareFlatRendering(f, x, z, matrixStackIn, entityIn);
 	}
 }
