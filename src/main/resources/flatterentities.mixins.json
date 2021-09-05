@@ -16,7 +16,9 @@
 	"ItemRendererMixin",
 	"TridentRendererMixin",
 	"MinecartRendererMixin",
-	"BoatRendererMixin"
+	"BoatRendererMixin",
+	
+	"gecko.GeoEntityRendererMixin"
   ],
   "injectors": {
 	"defaultRequire": 1
