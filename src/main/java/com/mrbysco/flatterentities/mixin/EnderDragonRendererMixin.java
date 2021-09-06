@@ -23,7 +23,8 @@ public class EnderDragonRendererMixin {
 			locals = LocalCapture.CAPTURE_FAILEXCEPTION, at = @At(
 			value = "INVOKE",
 			target = "Lnet/minecraft/client/renderer/entity/EnderDragonRenderer$EnderDragonModel;setLivingAnimations(Lnet/minecraft/entity/boss/dragon/EnderDragonEntity;FFF)V",
-			shift = Shift.AFTER))
+			shift = Shift.AFTER,
+			ordinal = 0))
 	public void flatterRender(EnderDragonEntity entityIn, float entityYaw, float partialTicks, MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int packedLightIn, CallbackInfo ci) {
 		float f = MathHelper.interpolateAngle(partialTicks, entityIn.prevRenderYawOffset, entityIn.renderYawOffset);
 

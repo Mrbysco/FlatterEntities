@@ -22,7 +22,8 @@ public class ItemRendererMixin {
 			locals = LocalCapture.CAPTURE_FAILEXCEPTION, at = @At(
 			value = "INVOKE",
 			target = "Lcom/mojang/blaze3d/matrix/MatrixStack;translate(DDD)V",
-			shift = Shift.AFTER))
+			shift = Shift.AFTER,
+			ordinal = 0))
 	public void flatterRender(ItemEntity entityIn, float entityYaw, float partialTicks, MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int packedLightIn, CallbackInfo ci) {
 		final float f = MathHelper.lerp(partialTicks, entityIn.prevRotationYaw, entityIn.rotationYaw);
 		double x = entityIn.getPosX();

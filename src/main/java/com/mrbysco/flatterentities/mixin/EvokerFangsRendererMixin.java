@@ -21,7 +21,8 @@ public class EvokerFangsRendererMixin {
 			locals = LocalCapture.CAPTURE_FAILEXCEPTION, at = @At(
 			value = "INVOKE",
 			target = "Lcom/mojang/blaze3d/matrix/MatrixStack;rotate(Lnet/minecraft/util/math/vector/Quaternion;)V",
-			shift = Shift.BEFORE))
+			shift = Shift.BEFORE,
+			ordinal = 0))
 	public void flatterRender(EvokerFangsEntity entityIn, float entityYaw, float partialTicks, MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int packedLightIn, CallbackInfo ci) {
 		final float f = MathHelper.lerp(partialTicks, entityIn.prevRotationYaw, entityIn.rotationYaw);
 		double x = entityIn.getPosX();

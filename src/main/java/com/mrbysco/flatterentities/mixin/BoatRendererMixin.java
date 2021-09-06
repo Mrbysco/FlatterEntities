@@ -25,7 +25,8 @@ public class BoatRendererMixin<T extends BoatEntity> {
 			locals = LocalCapture.CAPTURE_FAILEXCEPTION, at = @At(
 			value = "INVOKE",
 			target = "Lcom/mojang/blaze3d/matrix/MatrixStack;translate(DDD)V",
-			shift = Shift.AFTER))
+			shift = Shift.AFTER,
+			ordinal = 0))
 	public void flatterRender(T entityIn, float entityYaw, float partialTicks, MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int packedLightIn, CallbackInfo ci) {
 		if (entityIn.isBeingRidden()) {
 			final Entity passenger = entityIn.getPassengers().get(0);

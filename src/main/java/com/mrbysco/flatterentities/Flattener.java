@@ -44,7 +44,8 @@ public class Flattener {
 
 			if (!entityBlacklisted && (dimensionFlat || renderAnyway)) {
 				double angle1 = MathHelper.wrapDegrees(Math.atan2(z, x) / Math.PI * 180.0D);
-				double angle2 = MathHelper.wrapDegrees(Math.floor((f - angle1) / 45.0D) * 45.0D);
+
+				double angle2 = MathHelper.wrapDegrees(Math.floor((f - angle1) / 45.0) * 45.0D);
 				final PointOfView viewPoint = Minecraft.getInstance().gameSettings.getPointOfView();
 				boolean isPlayer = entityIn == Minecraft.getInstance().player;
 				float offset = 0;
@@ -55,27 +56,26 @@ public class Flattener {
 
 				if(isPlayer) {
 					if(viewPoint == PointOfView.FIRST_PERSON || viewPoint == PointOfView.THIRD_PERSON_BACK) {
-						poseStack.rotate(Vector3f.YP.rotationDegrees(-90.0F - offset));
+						angle1 = -90.0F - offset;
 					}
 					if(viewPoint == PointOfView.THIRD_PERSON_FRONT) {
-						poseStack.rotate(Vector3f.YP.rotationDegrees(90 + offset));
+						angle1 = 90 + offset;
 					}
-				} else {
-					poseStack.rotate(Vector3f.YP.rotationDegrees((float) angle1));
 				}
+
+				poseStack.rotate(Vector3f.YP.rotationDegrees((float) angle1));
 
 				poseStack.scale(0.02F, 1.0F, 1.0F);
 
 				if(isPlayer) {
 					if(viewPoint == PointOfView.FIRST_PERSON || viewPoint == PointOfView.THIRD_PERSON_BACK) {
-						poseStack.rotate(Vector3f.YP.rotationDegrees(90 + offset));
+						angle2 = 90 + offset;
 					}
 					if(viewPoint == PointOfView.THIRD_PERSON_FRONT) {
-						poseStack.rotate(Vector3f.YP.rotationDegrees(-90 - offset));
+						angle2 = -90 - offset;
 					}
-				} else {
-					poseStack.rotate(Vector3f.YP.rotationDegrees((float) angle2));
 				}
+				poseStack.rotate(Vector3f.YP.rotationDegrees((float) angle2));
 			}
 		}
 	}
