@@ -1,9 +1,10 @@
-package com.mrbysco.flatterentities.mixin.gecko;
+package com.mrbysco.flatterentities.mixin;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mrbysco.flatterentities.Flattener;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -14,17 +15,16 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
-@Mixin(software.bernie.geckolib3.renderers.geo.GeoEntityRenderer.class)
-public class GeoEntityRendererMixin<T extends LivingEntity> {
+@Mixin(LivingEntityRenderer.class)
+public class LivingEntityRendererMixin<T extends LivingEntity> {
 
 	@Inject(method = "render(Lnet/minecraft/world/entity/LivingEntity;FFLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;I)V",
-			remap = false,
-			locals = LocalCapture.NO_CAPTURE, at = @At(
+			locals = LocalCapture.CAPTURE_FAILEXCEPTION, at = @At(
 			value = "INVOKE",
 			target = "Lcom/mojang/blaze3d/vertex/PoseStack;translate(DDD)V",
 			shift = Shift.AFTER,
 			ordinal = 1))
-	public void flatterRender(T entityIn, float entityYaw, float partialTicks, PoseStack matrixStackIn, MultiBufferSource bufferIn, int packedLightIn, CallbackInfo ci) {
+	public void flatterRender(T entityIn, float entityYaw, float partialTicks, PoseStack poseStack, MultiBufferSource bufferSource, int packedLightIn, CallbackInfo cir) {
 		final boolean shouldSit = entityIn.isPassenger() && (entityIn.getVehicle() != null && entityIn.getVehicle().shouldRiderSit());
 		float f = Mth.rotLerp(partialTicks, entityIn.yBodyRotO, entityIn.yBodyRot);
 		final float f1 = Mth.rotLerp(partialTicks, entityIn.yHeadRotO, entityIn.yHeadRot);
@@ -55,6 +55,6 @@ public class GeoEntityRendererMixin<T extends LivingEntity> {
 			z -= player.getZ();
 		}
 
-		Flattener.prepareFlatRendering(f, x, z, matrixStackIn, entityIn);
+		Flattener.prepareFlatRendering(f, x, z, poseStack, entityIn);
 	}
 }

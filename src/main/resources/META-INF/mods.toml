@@ -1,5 +1,5 @@
 modLoader="javafml"
-loaderVersion="[36,)"
+loaderVersion="[37,)"
 issueTrackerURL="https://github.com/Mrbysco/flatterentities"
 license="GNU Lesser General Public License v3.0"
 
@@ -15,6 +15,12 @@ Entities but more flat
 [[dependencies.flatterentities]]
 modId="minecraft"
 mandatory=true
-versionRange="[1.16.5,1.17)"
+versionRange="[1.17.1,1.18)"
 ordering="NONE"
-side="CLIENT"
+side="BOTH"
+[[dependencies.flatterentities]]
+modId="forge"
+mandatory=true
+versionRange="[37.0.59,38)"
+ordering="NONE"
+side="BOTH"

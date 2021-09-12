@@ -1,12 +1,11 @@
 package com.mrbysco.flatterentities;
 
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
 import net.minecraftforge.common.ForgeConfigSpec.ConfigValue;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.config.ModConfig;
-import net.minecraftforge.fml.config.ModConfig.ModConfigEvent;
+import net.minecraftforge.fml.event.config.ModConfigEvent;
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.Collections;
@@ -56,7 +55,7 @@ public class FlatConfig {
 			if(value.isEmpty()) {
 				return true;
 			} else {
-				return ResourceLocation.tryCreate(value) != null;
+				return ResourceLocation.tryParse(value) != null;
 			}
 		}
 		return false;
@@ -72,7 +71,7 @@ public class FlatConfig {
 				if(value.contains(",")) {
 					String[] splitValue = value.split(",");
 					if(splitValue.length == 2) {
-						return ResourceLocation.tryCreate(splitValue[0]) != null && ResourceLocation.tryCreate(splitValue[1]) != null;
+						return ResourceLocation.tryParse(splitValue[0]) != null && ResourceLocation.tryParse(splitValue[1]) != null;
 					}
 				}
 			}
@@ -89,12 +88,12 @@ public class FlatConfig {
 	}
 
 	@SubscribeEvent
-	public static void onLoad(final ModConfig.Loading configEvent) {
+	public static void onLoad(final ModConfigEvent.Loading configEvent) {
 		FlatterEntities.LOGGER.debug("Loaded Flatter Entities' config file {}", configEvent.getConfig().getFileName());
 	}
 
 	@SubscribeEvent
-	public static void onFileChange(final ModConfig.Reloading configEvent) {
+	public static void onFileChange(final ModConfigEvent.Reloading configEvent) {
 		FlatterEntities.LOGGER.debug("Flatter Entities' config just got changed on the file system!");
 	}
 

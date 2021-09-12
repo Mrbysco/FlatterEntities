@@ -1,20 +1,20 @@
 package com.mrbysco.flatterentities;
 
+import com.mojang.blaze3d.platform.InputConstants;
+import com.mojang.blaze3d.platform.InputConstants.Type;
+import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.settings.KeyBinding;
-import net.minecraft.client.util.InputMappings;
-import net.minecraft.client.util.InputMappings.Type;
 import net.minecraftforge.client.event.InputEvent.KeyInputEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+import net.minecraftforge.fmlclient.registry.ClientRegistry;
 import org.lwjgl.glfw.GLFW;
 
 public class Keybinds {
-	public static KeyBinding KEY_TOGGLE = new KeyBinding(
+	public static KeyMapping KEY_TOGGLE = new KeyMapping(
 			"key." + FlatterEntities.MOD_ID + ".toggle",
 			Type.KEYSYM,
-			InputMappings.INPUT_INVALID.getKeyCode(),
+			InputConstants.UNKNOWN.getValue(),
 			"category." + FlatterEntities.MOD_ID + ".main");
 
 	public static void registerKeybinds(final FMLClientSetupEvent event) {
@@ -24,11 +24,11 @@ public class Keybinds {
 	@SubscribeEvent
 	public void onKeyInput(KeyInputEvent event) {
 		final Minecraft minecraft = Minecraft.getInstance();
-		if(minecraft.currentScreen != null && event.getAction() != GLFW.GLFW_PRESS) return;
+		if(minecraft.screen != null && event.getAction() != GLFW.GLFW_PRESS) return;
 
-		if (InputMappings.isKeyDown(minecraft.getMainWindow().getHandle(), 292)) return;
+		if (InputConstants.isKeyDown(minecraft.getWindow().getWindow(), 292)) return;
 
-		if (KEY_TOGGLE.isPressed()) {
+		if (KEY_TOGGLE.consumeClick()) {
 			Flattener.renderingEnabled = !Flattener.renderingEnabled;
 		}
 	}

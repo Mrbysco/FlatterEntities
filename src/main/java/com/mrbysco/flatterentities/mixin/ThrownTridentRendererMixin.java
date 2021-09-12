@@ -4,10 +4,10 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mrbysco.flatterentities.Flattener;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.entity.TntRenderer;
+import net.minecraft.client.renderer.entity.ThrownTridentRenderer;
 import net.minecraft.util.Mth;
-import net.minecraft.world.entity.item.PrimedTnt;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.ThrownTrident;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.At.Shift;
@@ -15,15 +15,15 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
-@Mixin(TntRenderer.class)
-public class TntRendererMixin {
-	@Inject(method = "render(Lnet/minecraft/world/entity/item/PrimedTnt;FFLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;I)V",
+@Mixin(ThrownTridentRenderer.class)
+public class ThrownTridentRendererMixin {
+	@Inject(method = "render(Lnet/minecraft/world/entity/projectile/ThrownTrident;FFLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;I)V",
 			locals = LocalCapture.CAPTURE_FAILEXCEPTION, at = @At(
 			value = "INVOKE",
-			target = "Lcom/mojang/blaze3d/vertex/PoseStack;translate(DDD)V",
+			target = "Lcom/mojang/blaze3d/vertex/PoseStack;mulPose(Lcom/mojang/math/Quaternion;)V",
 			shift = Shift.AFTER,
-			ordinal = 0))
-	public void flatterRender(PrimedTnt entityIn, float entityYaw, float partialTicks, PoseStack matrixStackIn, MultiBufferSource bufferIn, int packedLightIn, CallbackInfo ci) {
+			ordinal = 1))
+	public void flatterRender(ThrownTrident entityIn, float entityYaw, float partialTicks, PoseStack matrixStackIn, MultiBufferSource bufferIn, int packedLightIn, CallbackInfo ci) {
 		final float f = Mth.rotLerp(partialTicks, entityIn.yRotO, entityIn.getYRot());
 		double x = entityIn.getX();
 		double z = entityIn.getZ();
