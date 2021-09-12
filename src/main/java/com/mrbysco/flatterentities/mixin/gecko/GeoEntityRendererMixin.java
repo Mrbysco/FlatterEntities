@@ -28,8 +28,7 @@ public class GeoEntityRendererMixin<T extends LivingEntity> {
 		final boolean shouldSit = entityIn.isPassenger() && (entityIn.getVehicle() != null && entityIn.getVehicle().shouldRiderSit());
 		float f = Mth.rotLerp(partialTicks, entityIn.yBodyRotO, entityIn.yBodyRot);
 		final float f1 = Mth.rotLerp(partialTicks, entityIn.yHeadRotO, entityIn.yHeadRot);
-		if (shouldSit && entityIn.getVehicle() instanceof LivingEntity) {
-			final LivingEntity livingentity = (LivingEntity)entityIn.getVehicle();
+		if (shouldSit && entityIn.getVehicle() instanceof final LivingEntity livingentity) {
 			f = Mth.rotLerp(partialTicks, livingentity.yBodyRotO, livingentity.yBodyRot);
 			final float f2 = f1 - f;
 			float f3 = Mth.wrapDegrees(f2);

@@ -30,8 +30,7 @@ public class BoatRendererMixin<T extends Boat> {
 	public void flatterRender(T entityIn, float entityYaw, float partialTicks, PoseStack matrixStackIn, MultiBufferSource bufferIn, int packedLightIn, CallbackInfo ci) {
 		if (entityIn.isVehicle()) {
 			final Entity passenger = entityIn.getPassengers().get(0);
-			if(passenger instanceof LivingEntity) {
-				final LivingEntity rider = (LivingEntity) passenger;
+			if(passenger instanceof LivingEntity rider) {
 				if(rider.getMainHandItem().hasCustomHoverName()) {
 					final String s = ChatFormatting.stripFormatting(rider.getMainHandItem().getDisplayName().getString());
 					if(s != null && s.equals("Float")) {
