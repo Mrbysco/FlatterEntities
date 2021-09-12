@@ -44,8 +44,8 @@ public class Flattener {
 
 			if (!entityBlacklisted && (dimensionFlat || renderAnyway)) {
 				double angle1 = MathHelper.wrapDegrees(Math.atan2(z, x) / Math.PI * 180.0D);
-
 				double angle2 = MathHelper.wrapDegrees(Math.floor((f - angle1) / 45.0) * 45.0D);
+				
 				final PointOfView viewPoint = Minecraft.getInstance().gameSettings.getPointOfView();
 				boolean isPlayer = entityIn == Minecraft.getInstance().player;
 				float offset = 0;
