@@ -1,6 +1,7 @@
 package com.mrbysco.flatterentities.mixin;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mrbysco.flatterentities.FlatConfig;
 import com.mrbysco.flatterentities.Flattener;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
@@ -55,5 +56,8 @@ public class LivingRendererMixin<T extends LivingEntity> {
 		}
 
 		Flattener.prepareFlatRendering(f, x, z, matrixStackIn, entityIn);
+
+		if(FlatConfig.CLIENT.forceGlow.get())
+			entityIn.setGlowing(true);
 	}
 }
