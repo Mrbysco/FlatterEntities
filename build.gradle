@@ -12,7 +12,8 @@ buildscript {
 apply plugin: 'net.minecraftforge.gradle'
 // Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
 apply plugin: 'org.spongepowered.mixin'
-apply from: 'https://raw.githubusercontent.com/SizableShrimp/Forge-Class-Remapper/main/classremapper.gradle'
+apply plugin: 'maven-publish'
+
 version = "${version}"
 group = 'com.mrbysco.flatterentities' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "FlatterEntities-${mc_version}"
@@ -128,7 +129,35 @@ jar {
     }
 }
 
-jar.finalizedBy('reobfJar')
+def reobfFile = file("$buildDir/reobfJar/output.jar")
+def reobfArtifact = artifacts.add('default', reobfFile) {
+    tasks.build.dependsOn tasks.shadowJar
+    type 'jar'
+    builtBy 'reobfJar'
+}
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            artifact(reobfArtifact) {
+                builtBy reobfArtifact
+                artifactId = archivesBaseName
+                classifier null
+            }
+        }
+    }
+    repositories {
+        if (System.getenv().SAP_SECRET) {
+            maven {
+                url "https://maven.saps.dev/minecraft"
+                credentials {
+                    username = "mrbysco"
+                    password = "${System.getenv().SAP_SECRET}"
+                }
+            }
+        }
+    }
+}
+
 
 ////////////////
 // IntelliJ Project Import
