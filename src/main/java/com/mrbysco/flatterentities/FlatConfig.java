@@ -18,7 +18,6 @@ public class FlatConfig {
 		public final ConfigValue<List<? extends String>> entityDimensionWhitelist;
 		public final ConfigValue<List<? extends String>> dimensionBlacklist;
 		public final BooleanValue invertDimensionBlacklist;
-		public final BooleanValue forceGlow;
 
 		Client(ForgeConfigSpec.Builder builder) {
 			builder.comment("Client settings")
@@ -43,12 +42,8 @@ public class FlatConfig {
 							FlatConfig::isValidResourceLocation);
 
 			invertDimensionBlacklist = builder
-					.comment("Invert the Dimension Blacklist [Default: false]")
+					.comment("Invert the Dimension Blacklist")
 					.define("invertDimensionBlacklist", false);
-
-			forceGlow = builder
-					.comment("Force all living entities to glow [Default: false]")
-					.define("forceGlow", false);
 
 			builder.pop();
 		}
