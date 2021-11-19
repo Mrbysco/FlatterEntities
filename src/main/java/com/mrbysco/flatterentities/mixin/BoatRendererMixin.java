@@ -28,21 +28,21 @@ public class BoatRendererMixin<T extends BoatEntity> {
 			shift = Shift.AFTER,
 			ordinal = 0))
 	public void flatterRender(T entityIn, float entityYaw, float partialTicks, MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int packedLightIn, CallbackInfo ci) {
-		if (entityIn.isBeingRidden()) {
+		if (entityIn.isVehicle()) {
 			final Entity passenger = entityIn.getPassengers().get(0);
 			if(passenger instanceof LivingEntity) {
 				final LivingEntity rider = (LivingEntity) passenger;
-				if(rider.getHeldItemMainhand().hasDisplayName()) {
-					final String s = TextFormatting.getTextWithoutFormattingCodes(rider.getHeldItemMainhand().getDisplayName().getString());
+				if(rider.getMainHandItem().hasCustomHoverName()) {
+					final String s = TextFormatting.stripFormatting(rider.getMainHandItem().getHoverName().getString());
 					if(s != null && s.equals("Float")) {
-						final float f = MathHelper.lerp(partialTicks, entityIn.prevRotationYaw, entityIn.rotationYaw);
-						double x = entityIn.getPosX();
-						double z = entityIn.getPosZ();
+						final float f = MathHelper.lerp(partialTicks, entityIn.yRotO, entityIn.yRot);
+						double x = entityIn.getX();
+						double z = entityIn.getZ();
 
 						final PlayerEntity player = Minecraft.getInstance().player;
 						if(player != null) {
-							x -= player.getPosX();
-							z -= player.getPosZ();
+							x -= player.getX();
+							z -= player.getZ();
 						}
 
 						Flattener.prepareFlatRendering(f, x, z, matrixStackIn, entityIn);

@@ -56,7 +56,7 @@ public class FlatConfig {
 			if(value.isEmpty()) {
 				return true;
 			} else {
-				return ResourceLocation.tryCreate(value) != null;
+				return ResourceLocation.tryParse(value) != null;
 			}
 		}
 		return false;
@@ -72,7 +72,7 @@ public class FlatConfig {
 				if(value.contains(",")) {
 					String[] splitValue = value.split(",");
 					if(splitValue.length == 2) {
-						return ResourceLocation.tryCreate(splitValue[0]) != null && ResourceLocation.tryCreate(splitValue[1]) != null;
+						return ResourceLocation.tryParse(splitValue[0]) != null && ResourceLocation.tryParse(splitValue[1]) != null;
 					}
 				}
 			}

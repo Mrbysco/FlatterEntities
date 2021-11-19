@@ -24,14 +24,14 @@ public class LlamaSpitRendererMixin {
 			shift = Shift.AFTER,
 			ordinal = 0))
 	public void flatterRender(LlamaSpitEntity entityIn, float entityYaw, float partialTicks, MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int packedLightIn, CallbackInfo ci) {
-		final float f = MathHelper.lerp(partialTicks, entityIn.prevRotationYaw, entityIn.rotationYaw);
-		double x = entityIn.getPosX();
-		double z = entityIn.getPosZ();
+		final float f = MathHelper.lerp(partialTicks, entityIn.yRotO, entityIn.yRot);
+		double x = entityIn.getX();
+		double z = entityIn.getZ();
 
 		final PlayerEntity player = Minecraft.getInstance().player;
 		if(player != null) {
-			x -= player.getPosX();
-			z -= player.getPosZ();
+			x -= player.getX();
+			z -= player.getZ();
 		}
 
 		Flattener.prepareFlatRendering(f, x, z, matrixStackIn, entityIn);

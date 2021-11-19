@@ -14,7 +14,7 @@ public class Keybinds {
 	public static KeyBinding KEY_TOGGLE = new KeyBinding(
 			"key." + FlatterEntities.MOD_ID + ".toggle",
 			Type.KEYSYM,
-			InputMappings.INPUT_INVALID.getKeyCode(),
+			InputMappings.UNKNOWN.getValue(),
 			"category." + FlatterEntities.MOD_ID + ".main");
 
 	public static void registerKeybinds(final FMLClientSetupEvent event) {
@@ -24,11 +24,11 @@ public class Keybinds {
 	@SubscribeEvent
 	public void onKeyInput(KeyInputEvent event) {
 		final Minecraft minecraft = Minecraft.getInstance();
-		if(minecraft.currentScreen != null && event.getAction() != GLFW.GLFW_PRESS) return;
+		if(minecraft.screen != null && event.getAction() != GLFW.GLFW_PRESS) return;
 
-		if (InputMappings.isKeyDown(minecraft.getMainWindow().getHandle(), 292)) return;
+		if (InputMappings.isKeyDown(minecraft.getWindow().getWindow(), 292)) return;
 
-		if (KEY_TOGGLE.isPressed()) {
+		if (KEY_TOGGLE.consumeClick()) {
 			Flattener.renderingEnabled = !Flattener.renderingEnabled;
 		}
 	}

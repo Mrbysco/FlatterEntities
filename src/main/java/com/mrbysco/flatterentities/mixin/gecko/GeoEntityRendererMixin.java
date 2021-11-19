@@ -24,11 +24,11 @@ public class GeoEntityRendererMixin<T extends LivingEntity> {
 			shift = Shift.AFTER,
 			ordinal = 1))
 	public void flatterRender(T entityIn, float entityYaw, float partialTicks, MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int packedLightIn, CallbackInfo ci) {
-		float f = MathHelper.interpolateAngle(partialTicks, entityIn.prevRenderYawOffset, entityIn.renderYawOffset);
+		float f = MathHelper.rotLerp(partialTicks, entityIn.yBodyRotO, entityIn.yBodyRot);
 
-		final boolean shouldSit = entityIn.isPassenger() && (entityIn.getRidingEntity() != null && entityIn.getRidingEntity().shouldRiderSit());
-		if (shouldSit && entityIn.getRidingEntity() instanceof LivingEntity) {
-			float f1 = MathHelper.interpolateAngle(partialTicks, entityIn.prevRotationYawHead, entityIn.rotationYawHead);
+		final boolean shouldSit = entityIn.isPassenger() && (entityIn.getVehicle() != null && entityIn.getVehicle().shouldRiderSit());
+		if (shouldSit && entityIn.getVehicle() instanceof LivingEntity) {
+			float f1 = MathHelper.rotLerp(partialTicks, entityIn.yHeadRotO, entityIn.yHeadRot);
 			float f2 = f1 - f;
 			float f3 = MathHelper.wrapDegrees(f2);
 			if (f3 < -85.0F) {
@@ -44,13 +44,13 @@ public class GeoEntityRendererMixin<T extends LivingEntity> {
 				f += f3 * 0.2F;
 			}
 		}
-		double x = entityIn.getPosX();
-		double z = entityIn.getPosZ();
+		double x = entityIn.getX();
+		double z = entityIn.getZ();
 
 		final PlayerEntity player = Minecraft.getInstance().player;
 		if(player != null) {
-			x -= player.getPosX();
-			z -= player.getPosZ();
+			x -= player.getX();
+			z -= player.getZ();
 		}
 
 		Flattener.prepareFlatRendering(f, x, z, matrixStackIn, entityIn);

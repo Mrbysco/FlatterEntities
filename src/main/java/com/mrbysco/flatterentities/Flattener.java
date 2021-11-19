@@ -30,7 +30,7 @@ public class Flattener {
 	public static void prepareFlatRendering(float f, double x, double z, MatrixStack poseStack, Entity entityIn) {
 		if(renderingEnabled) {
 			final EntityType<?> entityType = entityIn.getType();
-			final RegistryKey<World> entityDimension = entityIn.getEntityWorld().getDimensionKey();
+			final RegistryKey<World> entityDimension = entityIn.getCommandSenderWorld().dimension();
 			final boolean entityInList = entityBlacklist.contains(entityIn.getType());
 			final boolean worldInList = dimensionBlacklist.contains(entityDimension);
 			boolean entityBlacklisted = !entityBlacklist.isEmpty() && entityInList;
@@ -43,15 +43,15 @@ public class Flattener {
 			}
 
 			if (!entityBlacklisted && (dimensionFlat || renderAnyway)) {
-				double angle1 = MathHelper.wrapDegrees(Math.atan2(z, x) / Math.PI * 180.0D);
-				double angle2 = MathHelper.wrapDegrees(Math.floor((f - angle1) / 45.0) * 45.0D);
+				double angle1 = Math.atan2(z, x) / 3.141592653589793D * 180.0D;
+				double angle2 = Math.floor((f - angle1) / 45.0D) * 45.0D;
 				
-				final PointOfView viewPoint = Minecraft.getInstance().gameSettings.getPointOfView();
+				final PointOfView viewPoint = Minecraft.getInstance().options.getCameraType();
 				boolean isPlayer = entityIn == Minecraft.getInstance().player;
 				float offset = 0;
 				if(isPlayer && entityIn instanceof LivingEntity) {
 					LivingEntity livingEntity = (LivingEntity)entityIn;
-					offset = MathHelper.wrapDegrees(livingEntity.rotationYawHead - livingEntity.prevRotationYawHead);
+					offset = MathHelper.wrapDegrees(livingEntity.yHeadRot - livingEntity.yHeadRotO);
 				}
 
 				if(isPlayer) {
@@ -63,7 +63,7 @@ public class Flattener {
 					}
 				}
 
-				poseStack.rotate(Vector3f.YP.rotationDegrees((float) angle1));
+				poseStack.mulPose(Vector3f.YP.rotationDegrees((float) angle1));
 
 				poseStack.scale(0.02F, 1.0F, 1.0F);
 
@@ -75,7 +75,7 @@ public class Flattener {
 						angle2 = -90 - offset;
 					}
 				}
-				poseStack.rotate(Vector3f.YP.rotationDegrees((float) angle2));
+				poseStack.mulPose(Vector3f.YP.rotationDegrees((float) angle2));
 			}
 		}
 	}
@@ -84,7 +84,7 @@ public class Flattener {
 		entityBlacklist.clear();
 		for (String value : FlatConfig.CLIENT.entityBlacklist.get()) {
 			if(!value.isEmpty()) {
-				ResourceLocation resourceLocation = ResourceLocation.tryCreate(value);
+				ResourceLocation resourceLocation = ResourceLocation.tryParse(value);
 				if (resourceLocation != null) {
 					EntityType<?> entityType = ForgeRegistries.ENTITIES.getValue(resourceLocation);
 					if (entityType != null) {
@@ -102,12 +102,12 @@ public class Flattener {
 			if (value.contains(",")) {
 				String[] splitValue = value.split(",");
 				if(splitValue.length == 2) {
-					ResourceLocation entityLocation = ResourceLocation.tryCreate(splitValue[0]);
-					ResourceLocation worldLocation = ResourceLocation.tryCreate(splitValue[1]);
+					ResourceLocation entityLocation = ResourceLocation.tryParse(splitValue[0]);
+					ResourceLocation worldLocation = ResourceLocation.tryParse(splitValue[1]);
 					if(entityLocation != null && worldLocation != null) {
 						EntityType<?> entityType = ForgeRegistries.ENTITIES.getValue(entityLocation);
 						if (entityType != null) {
-							RegistryKey<World> worldKey = RegistryKey.getOrCreateKey(Registry.WORLD_KEY, worldLocation);
+							RegistryKey<World> worldKey = RegistryKey.create(Registry.DIMENSION_REGISTRY, worldLocation);
 							List<EntityType<?>> entityList = entityDimensionWhitelist.getOrDefault(worldKey, new ArrayList<>());
 							entityList.add(entityType);
 							entityDimensionWhitelist.put(worldKey, entityList);
@@ -123,9 +123,9 @@ public class Flattener {
 		dimensionBlacklist.clear();
 		for (String value : FlatConfig.CLIENT.dimensionBlacklist.get()) {
 			if(!value.isEmpty()) {
-				ResourceLocation resourceLocation = ResourceLocation.tryCreate(value);
+				ResourceLocation resourceLocation = ResourceLocation.tryParse(value);
 				if (resourceLocation != null) {
-					RegistryKey<World> worldKey = RegistryKey.getOrCreateKey(Registry.WORLD_KEY, resourceLocation);
+					RegistryKey<World> worldKey = RegistryKey.create(Registry.DIMENSION_REGISTRY, resourceLocation);
 					dimensionBlacklist.add(worldKey);
 				} else {
 					FlatterEntities.LOGGER.error("Invalid dimension blacklist value: {}, Are you sure this is the resource location of the dimension?", value);
