@@ -18,7 +18,7 @@ version = "${version}"
 group = 'com.mrbysco.flatterentities' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "FlatterEntities-${mc_version}"
 
-java.toolchain.languageVersion = JavaLanguageVersion.of(16) // Mojang ships Java 8 to end users, so your mod should target Java 8.
+java.toolchain.languageVersion = JavaLanguageVersion.of(17) // Mojang ships Java 8 to end users, so your mod should target Java 8.
 
 println('Java: ' + System.getProperty('java.version') + ' JVM: ' + System.getProperty('java.vm.version') + '(' + System.getProperty('java.vendor') + ') Arch: ' + System.getProperty('os.arch'))
 minecraft {
@@ -100,17 +100,18 @@ mixin {
 
 repositories {
     maven {
-        url "https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/"
+        url = 'https://www.cursemaven.com'
+        content {
+            includeGroup "curse.maven"
+        }
     }
-    maven { url = 'https://www.cursemaven.com'  }
 }
 
 dependencies {
     minecraft "net.minecraftforge:forge:${mc_version}-${forge_version}"
-    annotationProcessor 'org.spongepowered:mixin:0.8.4:processor'
+    annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 
-//    implementation fg.deobf('software.bernie.geckolib:geckolib-forge-1.17:3.0.1')
-    implementation fg.deobf("curse.maven:GeckoLib-388172:3457492")
+    implementation fg.deobf("curse.maven:GeckoLib-388172:3542717")
 }
 
 // Example for how to get properties into the manifest for reading by the runtime..
