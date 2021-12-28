@@ -1,0 +1,10 @@
+{
+  "category.flatterentities.main": "Flatter Entities",
+  "key.flatterentities.toggle": "Toggle Flat Rendering",
+
+  "text.autoconfig.flatterentities.option.client" : "Client",
+  "text.autoconfig.flatterentities.option.client.entityBlacklist" : "Entity Blacklist",
+  "text.autoconfig.flatterentities.option.client.entityDimensionWhitelist" : "Entity Dimension Whitelist",
+  "text.autoconfig.flatterentities.option.client.dimensionBlacklist" : "Dimension Blacklist",
+  "text.autoconfig.flatterentities.option.client.invertDimensionBlacklist" : "Invert Dimension Blacklist"
+}

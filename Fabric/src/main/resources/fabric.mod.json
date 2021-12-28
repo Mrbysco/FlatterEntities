@@ -1,0 +1,45 @@
+{
+    "schemaVersion": 1,
+    "id": "flatterentities",
+    "version": "${version}",
+  
+    "name": "Flatter Entities",
+    "description": "Entities but more flat",
+    "authors": [
+      "Mrbysco"
+    ],
+    "contact": {
+      "homepage": "https://www.curseforge.com/minecraft/mc-mods/flatter-entities",
+      "sources": "https://github.com/Mrbysco/flatterentities",
+      "issues": "https://github.com/Mrbysco/FlatterEntities/issues"
+    },
+  
+    "license": "CC0-1.0",
+    "icon": "assets/flatterentities/icon.png",
+  
+    "environment": "*",
+    "entrypoints": {
+      "client": [
+        "com.mrbysco.flatterentities.FlatterEntities"
+      ],
+      "modmenu": [
+        "com.mrbysco.flatterentities.compat.FlatterModMenuIntegration"
+      ]
+    },
+    "mixins": [
+      "multiloader.mixins.json",
+      "multiloader.fabric.mixins.json"
+    ],
+  
+    "depends": {
+      "fabricloader": ">=0.12",
+      "fabric": "*",
+      "minecraft": "1.18.x",
+      "java": ">=17",
+      "cloth-config": ">=6.0.42"
+    },
+    "suggests": {
+      "another-mod": "*"
+    }
+  }
+  
