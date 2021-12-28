@@ -27,8 +27,8 @@
       ]
     },
     "mixins": [
-      "multiloader.mixins.json",
-      "multiloader.fabric.mixins.json"
+      "flatterentities.mixins.json",
+	  "flatterentities.fabric.mixins.json"
     ],
   
     "depends": {
