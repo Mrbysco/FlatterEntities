@@ -93,7 +93,7 @@ dependencies {
     compileOnly project(":Common")
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 
-    implementation fg.deobf("curse.maven:GeckoLib-388172:3542717")
+    implementation fg.deobf("curse.maven:GeckoLib-388172:3669112")
 }
 
 tasks.withType(JavaCompile) {
