@@ -94,7 +94,7 @@ public class FlatConfig {
 
 	@SubscribeEvent
 	public static void onFileChange(final ModConfigEvent.Reloading configEvent) {
-		Reference.LOGGER.debug("Flatter Entities' config just got changed on the file system!");
+		Reference.LOGGER.warn("Flatter Entities' config just got changed on the file system!");
 	}
 
 	@SubscribeEvent
