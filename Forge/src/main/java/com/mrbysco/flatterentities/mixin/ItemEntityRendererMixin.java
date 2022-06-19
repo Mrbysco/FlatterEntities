@@ -24,7 +24,7 @@ public class ItemEntityRendererMixin {
 			target = "Lcom/mojang/blaze3d/vertex/PoseStack;translate(DDD)V",
 			shift = Shift.AFTER,
 			ordinal = 0))
-	public void flatterRender(ItemEntity entityIn, float entityYaw, float partialTicks, PoseStack matrixStackIn, MultiBufferSource bufferIn, int packedLightIn, CallbackInfo ci) {
+	public void flatterRender(ItemEntity entityIn, float entityYaw, float partialTicks, PoseStack poseStack, MultiBufferSource bufferSource, int packedLightIn, CallbackInfo ci) {
 		final float f = Mth.rotLerp(partialTicks, entityIn.yRotO, entityIn.getYRot());
 		double x = entityIn.getX();
 		double z = entityIn.getZ();
@@ -35,6 +35,6 @@ public class ItemEntityRendererMixin {
 			z -= player.getZ();
 		}
 
-		Flattener.prepareFlatRendering(f, x, z, matrixStackIn, entityIn);
+		Flattener.prepareFlatRendering(f, x, z, poseStack, entityIn);
 	}
 }

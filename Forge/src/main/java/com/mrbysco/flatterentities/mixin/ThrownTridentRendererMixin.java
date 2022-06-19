@@ -23,7 +23,7 @@ public class ThrownTridentRendererMixin {
 			target = "Lcom/mojang/blaze3d/vertex/PoseStack;mulPose(Lcom/mojang/math/Quaternion;)V",
 			shift = Shift.AFTER,
 			ordinal = 1))
-	public void flatterRender(ThrownTrident entityIn, float entityYaw, float partialTicks, PoseStack matrixStackIn, MultiBufferSource bufferIn, int packedLightIn, CallbackInfo ci) {
+	public void flatterRender(ThrownTrident entityIn, float entityYaw, float partialTicks, PoseStack poseStack, MultiBufferSource bufferSource, int packedLightIn, CallbackInfo ci) {
 		final float f = Mth.rotLerp(partialTicks, entityIn.yRotO, entityIn.getYRot());
 		double x = entityIn.getX();
 		double z = entityIn.getZ();
@@ -34,6 +34,6 @@ public class ThrownTridentRendererMixin {
 			z -= player.getZ();
 		}
 
-		Flattener.prepareFlatRendering(f, x, z, matrixStackIn, entityIn);
+		Flattener.prepareFlatRendering(f, x, z, poseStack, entityIn);
 	}
 }

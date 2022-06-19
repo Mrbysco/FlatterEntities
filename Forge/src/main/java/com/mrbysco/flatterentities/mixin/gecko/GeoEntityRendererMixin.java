@@ -24,7 +24,7 @@ public class GeoEntityRendererMixin<T extends LivingEntity> {
 			target = "Lcom/mojang/blaze3d/vertex/PoseStack;translate(DDD)V",
 			shift = Shift.AFTER,
 			ordinal = 1))
-	public void flatterRender(T entityIn, float entityYaw, float partialTicks, PoseStack matrixStackIn, MultiBufferSource bufferIn, int packedLightIn, CallbackInfo ci) {
+	public void flatterRender(T entityIn, float entityYaw, float partialTicks, PoseStack poseStack, MultiBufferSource bufferSource, int packedLightIn, CallbackInfo ci) {
 		final boolean shouldSit = entityIn.isPassenger() && (entityIn.getVehicle() != null && entityIn.getVehicle().shouldRiderSit());
 		float f = Mth.rotLerp(partialTicks, entityIn.yBodyRotO, entityIn.yBodyRot);
 		final float f1 = Mth.rotLerp(partialTicks, entityIn.yHeadRotO, entityIn.yHeadRot);
@@ -54,6 +54,6 @@ public class GeoEntityRendererMixin<T extends LivingEntity> {
 			z -= player.getZ();
 		}
 
-		Flattener.prepareFlatRendering(f, x, z, matrixStackIn, entityIn);
+		Flattener.prepareFlatRendering(f, x, z, poseStack, entityIn);
 	}
 }

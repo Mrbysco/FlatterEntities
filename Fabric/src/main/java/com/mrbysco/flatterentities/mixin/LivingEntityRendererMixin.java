@@ -49,7 +49,7 @@ public class LivingEntityRendererMixin<T extends LivingEntity> {
 		double z = entityIn.getZ();
 
 		final Player player = Minecraft.getInstance().player;
-		if(player != null) {
+		if (player != null) {
 			x -= player.getX();
 			z -= player.getZ();
 		}

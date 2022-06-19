@@ -6,22 +6,23 @@
   "mixins": [
   ],
   "client": [
-    "LivingEntityRendererMixin",
-    "EnderDragonRendererMixin",
-    "EndCrystalRendererMixin",
-    "EvokerFangsRendererMixin",
-    "ShulkerBulletRendererMixin",
-    "LlamaSpitRendererMixin",
-    "TntRendererMixin",
-    "ItemEntityRendererMixin",
-    "ThrownTridentRendererMixin",
-    "MinecartRendererMixin",
-    "BoatRendererMixin"
+	"BoatRendererMixin",
+	"EndCrystalRendererMixin",
+	"EnderDragonRendererMixin",
+	"EvokerFangsRendererMixin",
+	"ItemEntityRendererMixin",
+	"LivingEntityRendererMixin",
+	"LlamaSpitRendererMixin",
+	"MinecartRendererMixin",
+	"ShulkerBulletRendererMixin",
+	"ThrownTridentRendererMixin",
+	"TntRendererMixin",
+	"gecko.GeoEntityRendererMixin"
   ],
   "server": [
   ],
   "injectors": {
-    "defaultRequire": 1
+	"defaultRequire": 1
   }
 }
   

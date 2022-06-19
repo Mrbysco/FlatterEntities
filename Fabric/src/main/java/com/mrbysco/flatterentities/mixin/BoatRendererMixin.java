@@ -27,7 +27,7 @@ public class BoatRendererMixin<T extends Boat> {
 			target = "Lcom/mojang/blaze3d/vertex/PoseStack;translate(DDD)V",
 			shift = Shift.AFTER,
 			ordinal = 0))
-	public void flatterRender(T entityIn, float entityYaw, float partialTicks, PoseStack matrixStackIn, MultiBufferSource bufferIn, int packedLightIn, CallbackInfo ci) {
+	public void flatterRender(T entityIn, float entityYaw, float partialTicks, PoseStack poseStack, MultiBufferSource bufferSource, int packedLightIn, CallbackInfo ci) {
 		if (entityIn.isVehicle()) {
 			final Entity passenger = entityIn.getPassengers().get(0);
 			if(passenger instanceof LivingEntity rider) {
@@ -44,7 +44,7 @@ public class BoatRendererMixin<T extends Boat> {
 							z -= player.getZ();
 						}
 
-						Flattener.prepareFlatRendering(f, x, z, matrixStackIn, entityIn);
+						Flattener.prepareFlatRendering(f, x, z, poseStack, entityIn);
 					}
 				}
 			}

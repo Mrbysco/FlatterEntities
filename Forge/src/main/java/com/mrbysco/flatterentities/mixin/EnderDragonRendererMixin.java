@@ -25,7 +25,7 @@ public class EnderDragonRendererMixin {
 			target = "Lnet/minecraft/client/renderer/entity/EnderDragonRenderer$DragonModel;prepareMobModel(Lnet/minecraft/world/entity/boss/enderdragon/EnderDragon;FFF)V",
 			shift = Shift.AFTER,
 			ordinal = 0))
-	public void flatterRender(EnderDragon entityIn, float entityYaw, float partialTicks, PoseStack poseStack, MultiBufferSource bufferIn, int packedLightIn, CallbackInfo ci) {
+	public void flatterRender(EnderDragon entityIn, float entityYaw, float partialTicks, PoseStack poseStack, MultiBufferSource bufferSource, int packedLightIn, CallbackInfo ci) {
 		final boolean shouldSit = entityIn.isPassenger() && (entityIn.getVehicle() != null && entityIn.getVehicle().shouldRiderSit());
 		float f = Mth.rotLerp(partialTicks, entityIn.yBodyRotO, entityIn.yBodyRot);
 		final float f1 = Mth.rotLerp(partialTicks, entityIn.yHeadRotO, entityIn.yHeadRot);
