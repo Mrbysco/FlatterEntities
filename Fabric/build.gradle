@@ -30,7 +30,7 @@ dependencies {
     }
     modImplementation "com.terraformersmc:modmenu:${mod_menu_version}"
 
-    modImplementation "software.bernie.geckolib:geckolib-fabric-1.19:${gecko_fabric_version}"
+    modImplementation "software.bernie.geckolib:geckolib-fabric-1.19.3:${gecko_fabric_version}"
 }
 
 loom {

@@ -14,7 +14,7 @@
       "issues": "https://github.com/Mrbysco/FlatterEntities/issues"
     },
   
-    "license": "MIT",
+    "license": "GNU Lesser General Public License v3.0",
     "icon": "assets/flatterentities/icon.png",
   
     "environment": "*",
@@ -33,9 +33,9 @@
     "depends": {
       "fabricloader": ">=0.14",
       "fabric": "*",
-      "minecraft": "1.19.x",
+      "minecraft": ">=1.19.3",
       "java": ">=17",
-      "cloth-config": ">=7.0.67"
+      "cloth-config": ">=9.0.94"
     },
     "suggests": {
       "another-mod": "*"

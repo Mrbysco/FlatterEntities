@@ -1,6 +1,6 @@
 package com.mrbysco.flatterentities;
 
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
@@ -68,7 +68,7 @@ public class FlatterEntities {
 					if (entityLocation != null && worldLocation != null) {
 						EntityType<?> entityType = ForgeRegistries.ENTITY_TYPES.getValue(entityLocation);
 						if (entityType != null) {
-							ResourceKey<Level> worldKey = ResourceKey.create(Registry.DIMENSION_REGISTRY, worldLocation);
+							ResourceKey<Level> worldKey = ResourceKey.create(Registries.DIMENSION, worldLocation);
 							List<EntityType<?>> entityList = Flattener.entityDimensionWhitelist.getOrDefault(worldKey, new ArrayList<>());
 							entityList.add(entityType);
 							Flattener.entityDimensionWhitelist.put(worldKey, entityList);
@@ -86,7 +86,7 @@ public class FlatterEntities {
 			if (!value.isEmpty()) {
 				ResourceLocation resourceLocation = ResourceLocation.tryParse(value);
 				if (resourceLocation != null) {
-					ResourceKey<Level> worldKey = ResourceKey.create(Registry.DIMENSION_REGISTRY, resourceLocation);
+					ResourceKey<Level> worldKey = ResourceKey.create(Registries.DIMENSION, resourceLocation);
 					Flattener.dimensionBlacklist.add(worldKey);
 				} else {
 					Reference.LOGGER.error("Invalid dimension blacklist value: {}, Are you sure this is the resource location of the dimension?", value);

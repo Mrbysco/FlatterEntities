@@ -24,22 +24,22 @@ public class BoatRendererMixin<T extends Boat> {
 	@Inject(method = "render(Lnet/minecraft/world/entity/vehicle/Boat;FFLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;I)V",
 			locals = LocalCapture.CAPTURE_FAILEXCEPTION, at = @At(
 			value = "INVOKE",
-			target = "Lcom/mojang/blaze3d/vertex/PoseStack;translate(DDD)V",
+			target = "Lcom/mojang/blaze3d/vertex/PoseStack;translate(FFF)V",
 			shift = Shift.AFTER,
 			ordinal = 0))
 	public void flatterRender(T entityIn, float entityYaw, float partialTicks, PoseStack poseStack, MultiBufferSource bufferSource, int packedLightIn, CallbackInfo ci) {
 		if (entityIn.isVehicle()) {
 			final Entity passenger = entityIn.getPassengers().get(0);
-			if(passenger instanceof LivingEntity rider) {
-				if(rider.getMainHandItem().hasCustomHoverName()) {
+			if (passenger instanceof LivingEntity rider) {
+				if (rider.getMainHandItem().hasCustomHoverName()) {
 					final String s = ChatFormatting.stripFormatting(rider.getMainHandItem().getDisplayName().getString());
-					if(s != null && s.equals("Float")) {
+					if (s != null && s.equals("Float")) {
 						final float f = Mth.rotLerp(partialTicks, entityIn.yRotO, entityIn.getYRot());
 						double x = entityIn.getX();
 						double z = entityIn.getZ();
 
 						final Player player = Minecraft.getInstance().player;
-						if(player != null) {
+						if (player != null) {
 							x -= player.getX();
 							z -= player.getZ();
 						}

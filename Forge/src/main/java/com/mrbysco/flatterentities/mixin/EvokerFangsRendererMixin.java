@@ -20,7 +20,7 @@ public class EvokerFangsRendererMixin {
 	@Inject(method = "render(Lnet/minecraft/world/entity/projectile/EvokerFangs;FFLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;I)V",
 			locals = LocalCapture.CAPTURE_FAILEXCEPTION, at = @At(
 			value = "INVOKE",
-			target = "Lcom/mojang/blaze3d/vertex/PoseStack;mulPose(Lcom/mojang/math/Quaternion;)V",
+			target = "Lcom/mojang/blaze3d/vertex/PoseStack;mulPose(Lorg/joml/Quaternionf;)V",
 			shift = Shift.BEFORE,
 			ordinal = 0))
 	public void flatterRender(EvokerFangs entityIn, float entityYaw, float partialTicks, PoseStack poseStack, MultiBufferSource bufferSource, int packedLightIn, CallbackInfo ci) {
@@ -29,7 +29,7 @@ public class EvokerFangsRendererMixin {
 		double z = entityIn.getZ();
 
 		final Player player = Minecraft.getInstance().player;
-		if(player != null) {
+		if (player != null) {
 			x -= player.getX();
 			z -= player.getZ();
 		}
