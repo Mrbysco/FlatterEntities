@@ -1,3 +1,5 @@
+[![build](https://github.com/Mrbysco/FlatterEntities/actions/workflows/build.yml/badge.svg)](https://github.com/Mrbysco/FlatterEntities/actions/workflows/build.yml) [![](http://cf.way2muchnoise.eu/versions/523582.svg)](https://www.curseforge.com/minecraft/mc-mods/flatter-entities)
+
 # Flatter Entities #
 
 ## About ##
