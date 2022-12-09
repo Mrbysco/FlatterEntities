@@ -1,5 +1,5 @@
 plugins {
-    id 'fabric-loom' version '0.12-SNAPSHOT'
+    id 'fabric-loom' version '1.0-SNAPSHOT'
     id 'maven-publish'
     id 'idea'
 }
@@ -30,7 +30,7 @@ dependencies {
     }
     modImplementation "com.terraformersmc:modmenu:${mod_menu_version}"
 
-    modImplementation "software.bernie.geckolib:geckolib-fabric-${minecraft_version}:${gecko_fabric_version}"
+    modImplementation "software.bernie.geckolib:geckolib-fabric-1.19:${gecko_fabric_version}"
 }
 
 loom {
@@ -66,12 +66,6 @@ processResources {
 
 tasks.withType(JavaCompile) {
     source(project(":Common").sourceSets.main.allSource)
-}
-
-jar {
-    from("LICENSE") {
-        rename { "${it}_${mod_name}" }
-    }
 }
 
 publishing {
