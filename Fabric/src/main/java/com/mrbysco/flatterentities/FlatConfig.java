@@ -38,12 +38,12 @@ public class FlatConfig implements ConfigData {
 
 	public static boolean isValidOption(String configValue) {
 		String value = configValue;
-		if(value.isEmpty()) {
+		if (value.isEmpty()) {
 			return true;
 		} else {
-			if(value.contains(",")) {
+			if (value.contains(",")) {
 				String[] splitValue = value.split(",");
-				if(splitValue.length == 2) {
+				if (splitValue.length == 2) {
 					return ResourceLocation.tryParse(splitValue[0]) != null && ResourceLocation.tryParse(splitValue[1]) != null;
 				}
 			}
@@ -54,10 +54,10 @@ public class FlatConfig implements ConfigData {
 	@Override
 	public void validatePostLoad() throws ValidationException {
 		List<String> entityBlacklist = client.entityBlacklist;
-		if(!entityBlacklist.isEmpty()) {
+		if (!entityBlacklist.isEmpty()) {
 			for (ListIterator<String> iter = entityBlacklist.listIterator(); iter.hasNext(); ) {
 				String value = iter.next();
-				if(!isValidResourceLocation(value)) {
+				if (!isValidResourceLocation(value)) {
 					iter.set("");
 				}
 			}
@@ -65,10 +65,10 @@ public class FlatConfig implements ConfigData {
 		}
 
 		List<String> entityDimensionWhitelist = client.entityDimensionWhitelist;
-		if(!entityDimensionWhitelist.isEmpty()) {
+		if (!entityDimensionWhitelist.isEmpty()) {
 			for (ListIterator<String> iter = entityDimensionWhitelist.listIterator(); iter.hasNext(); ) {
 				String value = iter.next();
-				if(!isValidOption(value)) {
+				if (!isValidOption(value)) {
 					iter.set("");
 				}
 			}
@@ -76,10 +76,10 @@ public class FlatConfig implements ConfigData {
 		}
 
 		List<String> dimensionBlacklist = client.dimensionBlacklist;
-		if(!dimensionBlacklist.isEmpty()) {
+		if (!dimensionBlacklist.isEmpty()) {
 			for (ListIterator<String> iter = dimensionBlacklist.listIterator(); iter.hasNext(); ) {
 				String value = iter.next();
-				if(!isValidResourceLocation(value)) {
+				if (!isValidResourceLocation(value)) {
 					iter.set("");
 				}
 			}

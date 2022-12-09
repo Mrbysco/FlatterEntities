@@ -50,9 +50,9 @@ public class FlatConfig {
 
 	private static boolean isValidResourceLocation(Object object) {
 		boolean flag = object instanceof String;
-		if(flag) {
+		if (flag) {
 			String value = (String) object;
-			if(value.isEmpty()) {
+			if (value.isEmpty()) {
 				return true;
 			} else {
 				return ResourceLocation.tryParse(value) != null;
@@ -63,14 +63,14 @@ public class FlatConfig {
 
 	public static boolean isValidOption(Object object) {
 		boolean flag = object instanceof String;
-		if(flag) {
+		if (flag) {
 			String value = (String) object;
-			if(value.isEmpty()) {
+			if (value.isEmpty()) {
 				return true;
 			} else {
-				if(value.contains(",")) {
+				if (value.contains(",")) {
 					String[] splitValue = value.split(",");
-					if(splitValue.length == 2) {
+					if (splitValue.length == 2) {
 						return ResourceLocation.tryParse(splitValue[0]) != null && ResourceLocation.tryParse(splitValue[1]) != null;
 					}
 				}
@@ -81,6 +81,7 @@ public class FlatConfig {
 
 	public static final ForgeConfigSpec clientSpec;
 	public static final Client CLIENT;
+
 	static {
 		final Pair<Client, ForgeConfigSpec> specPair = new ForgeConfigSpec.Builder().configure(Client::new);
 		clientSpec = specPair.getRight();
@@ -99,7 +100,7 @@ public class FlatConfig {
 
 	@SubscribeEvent
 	public static void onReload(final ModConfigEvent configEvent) {
-		if(configEvent.getConfig().getModId().equals(Reference.MOD_ID)) {
+		if (configEvent.getConfig().getModId().equals(Reference.MOD_ID)) {
 			FlatterEntities.reloadCache();
 		}
 	}
