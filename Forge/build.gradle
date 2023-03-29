@@ -147,7 +147,7 @@ if (System.getenv().CURSEFORGE_KEY) {
     curseforge {
         apiKey = System.getenv().CURSEFORGE_KEY
         project {
-            id = project.curseforge_ids
+            id = project.curseforge_id
             releaseType = "release"
             addGameVersion "Forge"
             addGameVersion "${minecraft_version}"
