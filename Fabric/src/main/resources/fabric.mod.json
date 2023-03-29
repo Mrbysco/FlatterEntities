@@ -1,44 +1,40 @@
 {
-    "schemaVersion": 1,
-    "id": "flatterentities",
-    "version": "${version}",
-  
-    "name": "Flatter Entities",
-    "description": "Entities but more flat",
-    "authors": [
-      "Mrbysco"
+  "schemaVersion": 1,
+  "id": "flatterentities",
+  "version": "${version}",
+  "name": "Flatter Entities",
+  "description": "Entities but more flat",
+  "authors": [
+    "Mrbysco"
+  ],
+  "contact": {
+    "homepage": "https://www.curseforge.com/minecraft/mc-mods/flatter-entities",
+    "sources": "https://github.com/Mrbysco/flatterentities",
+    "issues": "https://github.com/Mrbysco/FlatterEntities/issues"
+  },
+  "license": "GNU Lesser General Public License v3.0",
+  "icon": "assets/flatterentities/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "client": [
+      "com.mrbysco.flatterentities.FlatterEntities"
     ],
-    "contact": {
-      "homepage": "https://www.curseforge.com/minecraft/mc-mods/flatter-entities",
-      "sources": "https://github.com/Mrbysco/flatterentities",
-      "issues": "https://github.com/Mrbysco/FlatterEntities/issues"
-    },
-  
-    "license": "GNU Lesser General Public License v3.0",
-    "icon": "assets/flatterentities/icon.png",
-  
-    "environment": "*",
-    "entrypoints": {
-      "client": [
-        "com.mrbysco.flatterentities.FlatterEntities"
-      ],
-      "modmenu": [
-        "com.mrbysco.flatterentities.compat.FlatterModMenuIntegration"
-      ]
-    },
-    "mixins": [
-	  "flatterentities.fabric.mixins.json"
-    ],
-  
-    "depends": {
-      "fabricloader": ">=0.14",
-      "fabric": "*",
-      "minecraft": ">=1.19.3",
-      "java": ">=17",
-      "cloth-config": ">=9.0.94"
-    },
-    "suggests": {
-      "another-mod": "*"
-    }
+    "modmenu": [
+      "com.mrbysco.flatterentities.compat.FlatterModMenuIntegration"
+    ]
+  },
+  "mixins": [
+    "flatterentities.fabric.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.14",
+    "fabric": "*",
+    "minecraft": ">=1.19.4",
+    "java": ">=17",
+    "cloth-config": ">=10.0.96"
+  },
+  "suggests": {
+    "another-mod": "*"
   }
+}
   
