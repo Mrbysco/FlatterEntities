@@ -23,7 +23,8 @@
     ]
   },
   "mixins": [
-    "flatterentities.fabric.mixins.json"
+    "flatterentities.fabric.mixins.json",
+    "flatterentities.gecko.fabric.mixins.json"
   ],
   "depends": {
     "fabricloader": ">=0.14",

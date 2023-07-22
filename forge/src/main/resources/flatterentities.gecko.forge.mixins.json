@@ -1,0 +1,13 @@
+{
+  "required": true,
+  "minVersion": "0.8.5",
+  "package": "com.mrbysco.flatterentities.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "client": [
+    "gecko.GeoEntityRendererMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 0
+  },
+  "refmap": "${mod_id}.refmap.json"
+}

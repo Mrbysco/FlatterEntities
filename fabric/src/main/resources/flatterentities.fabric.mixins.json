@@ -3,26 +3,21 @@
   "minVersion": "0.8.4",
   "package": "com.mrbysco.flatterentities.mixin",
   "compatibilityLevel": "JAVA_17",
-  "mixins": [
-  ],
   "client": [
-	"BoatRendererMixin",
-	"EndCrystalRendererMixin",
-	"EnderDragonRendererMixin",
-	"EvokerFangsRendererMixin",
-	"ItemEntityRendererMixin",
-	"LivingEntityRendererMixin",
-	"LlamaSpitRendererMixin",
-	"MinecartRendererMixin",
-	"ShulkerBulletRendererMixin",
-	"ThrownTridentRendererMixin",
-	"TntRendererMixin",
-	"gecko.GeoEntityRendererMixin"
-  ],
-  "server": [
+    "BoatRendererMixin",
+    "EndCrystalRendererMixin",
+    "EnderDragonRendererMixin",
+    "EvokerFangsRendererMixin",
+    "ItemEntityRendererMixin",
+    "LivingEntityRendererMixin",
+    "LlamaSpitRendererMixin",
+    "MinecartRendererMixin",
+    "ShulkerBulletRendererMixin",
+    "ThrownTridentRendererMixin",
+    "TntRendererMixin"
   ],
   "injectors": {
-	"defaultRequire": 1
+    "defaultRequire": 1
   }
 }
   
