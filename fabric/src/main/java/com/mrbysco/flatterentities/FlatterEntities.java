@@ -28,11 +28,10 @@ public class FlatterEntities implements ClientModInitializer {
 		});
 
 		KeyBindingHelper.registerKeyBinding(FlatKeybinds.KEY_TOGGLE);
-		ClientTickEvents.END_CLIENT_TICK.register(client -> Keybinds.onKeyPress(client));
-
-		CommonClass.init();
+		ClientTickEvents.END_CLIENT_TICK.register(Keybinds::onKeyPress);
 	}
 
+	@SuppressWarnings("ConstantValue")
 	public static void reloadCache() {
 		FlatConfig config = AutoConfig.getConfigHolder(FlatConfig.class).getConfig();
 

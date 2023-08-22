@@ -28,8 +28,6 @@ public class FlatterEntities {
 		ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, FlatConfig.clientSpec);
 		eventBus.register(FlatConfig.class);
 
-		CommonClass.init();
-
 		DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> {
 			FMLJavaModLoadingContext.get().getModEventBus().addListener(Keybinds::registerKeybinds);
 			MinecraftForge.EVENT_BUS.register(new Keybinds());
