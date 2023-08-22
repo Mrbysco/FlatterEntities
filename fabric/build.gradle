@@ -36,6 +36,7 @@ dependencies {
     modImplementation "com.terraformersmc:modmenu:${mod_menu_version}"
 
     modImplementation "software.bernie.geckolib:geckolib-fabric-${minecraft_version}:${gecko_fabric_version}"
+    modRuntimeOnly("mezz.jei:jei-${minecraft_version}-fabric:${jei_version}")
 }
 
 loom {

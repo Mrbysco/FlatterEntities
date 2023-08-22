@@ -91,6 +91,7 @@ dependencies {
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 
     compileOnly fg.deobf("software.bernie.geckolib:geckolib-forge-${minecraft_version}:${gecko_forge_version}")
+    runtimeOnly fg.deobf("mezz.jei:jei-${minecraft_version}-forge:${jei_version}")
 }
 
 tasks.withType(JavaCompile).configureEach {
