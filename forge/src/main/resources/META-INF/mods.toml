@@ -1,6 +1,6 @@
 modLoader="javafml"
-loaderVersion="[46,)"
-issueTrackerURL="https://github.com/Mrbysco/flatterentities"
+loaderVersion="[1,)"
+issueTrackerURL="https://github.com/Mrbysco/flatterentities/issues"
 license="GNU Lesser General Public License v3.0"
 
 [[mods]]
@@ -15,6 +15,10 @@ Entities but more flat
 [[dependencies.flatterentities]]
 modId="minecraft"
 mandatory=true
-versionRange="[1.20,1.21)"
+versionRange="[1.20.2,1.21)"
 ordering="NONE"
 side="BOTH"
+[[mixins]]
+config = "flatterentities.forge.mixins.json"
+#[[mixins]] Re-add when GeckoLib is updated to 1.20.2
+#config = "flatterentities.gecko.forge.mixins.json"
