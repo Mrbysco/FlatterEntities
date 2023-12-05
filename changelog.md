@@ -1,1 +1,1 @@
-* Possible fix for a crash when loading GeckoLib
+* Initial update to 1.20.2
