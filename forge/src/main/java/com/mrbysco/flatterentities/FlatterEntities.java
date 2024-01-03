@@ -11,7 +11,6 @@ import net.neoforged.fml.IExtensionPoint;
 import net.neoforged.fml.ModLoadingContext;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
-import net.neoforged.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.neoforge.common.NeoForge;
 
@@ -21,14 +20,12 @@ import java.util.List;
 @Mod(Reference.MOD_ID)
 public class FlatterEntities {
 
-	public FlatterEntities() {
-		IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();
-
+	public FlatterEntities(IEventBus eventBus) {
 		if (FMLEnvironment.dist.isClient()) {
 			ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, FlatConfig.clientSpec);
 			eventBus.register(FlatConfig.class);
 
-			FMLJavaModLoadingContext.get().getModEventBus().addListener(Keybinds::registerKeybinds);
+			eventBus.addListener(Keybinds::registerKeybinds);
 			NeoForge.EVENT_BUS.register(new Keybinds());
 		}
 

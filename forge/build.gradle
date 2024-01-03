@@ -50,8 +50,8 @@ dependencies {
     implementation "net.neoforged:neoforge:${neo_version}"
     compileOnly project(":common")
 
-//    compileOnly fg.deobf("software.bernie.geckolib:geckolib-forge-${minecraft_version}:${gecko_forge_version}")
-//    runtimeOnly fg.deobf("mezz.jei:jei-${minecraft_version}-forge:${jei_version}")
+    compileOnly "software.bernie.geckolib:geckolib-neoforge-${minecraft_version}:${gecko_forge_version}"
+//    runtimeOnly "mezz.jei:jei-${minecraft_version}-forge:${jei_version}"
 }
 
 // NeoGradle compiles the game, but we don't want to add our common code to the game's code
