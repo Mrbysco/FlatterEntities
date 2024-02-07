@@ -1,1 +1,1 @@
-* Possible fix for a crash when loading GeckoLib
+* Update flattening logic with help of Vashal
