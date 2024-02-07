@@ -4,6 +4,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import net.minecraft.client.CameraType;
 import net.minecraft.client.Minecraft;
+import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
@@ -85,7 +86,6 @@ public class Flattener {
 				poseStack.mulPose(Axis.YP.rotationDegrees((float) angle1));
 
 				// Scale entity for flat rendering effect
-				poseStack.scale(0.02F, 1.0F, 1.0F);
 
 				// Adjust angles based on camera view type again
 				if (isPlayer) {
@@ -98,7 +98,12 @@ public class Flattener {
 				}
 
 				// Apply additional Y-axis rotation transformation
-				poseStack.mulPose(Axis.YP.rotationDegrees((float) angle2));
+				if (entityIn.getDirection().getAxis() == Direction.Axis.Z) {
+					poseStack.scale(0.02F, 1.0F, 1.0F);
+				} else {
+					poseStack.scale(1.0F, 1.0F, 0.02F);
+				}
+				poseStack.mulPose(Axis.YP.rotationDegrees((float) angle2 - entityIn.getYRot()));
 			}
 		}
 	}
