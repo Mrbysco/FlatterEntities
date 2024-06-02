@@ -6,6 +6,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.BoatRenderer;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -29,9 +30,9 @@ public class BoatRendererMixin<T extends Boat> {
 			ordinal = 0))
 	public void flatterRender(T entityIn, float entityYaw, float partialTicks, PoseStack poseStack, MultiBufferSource bufferSource, int packedLightIn, CallbackInfo ci) {
 		if (entityIn.isVehicle()) {
-			final Entity passenger = entityIn.getPassengers().get(0);
+			final Entity passenger = entityIn.getPassengers().getFirst();
 			if (passenger instanceof LivingEntity rider) {
-				if (rider.getMainHandItem().hasCustomHoverName()) {
+				if (rider.getMainHandItem().has(DataComponents.CUSTOM_NAME)) {
 					final String s = ChatFormatting.stripFormatting(rider.getMainHandItem().getDisplayName().getString());
 					if (s != null && s.equals("Float")) {
 						final float f = Mth.rotLerp(partialTicks, entityIn.yRotO, entityIn.getYRot());

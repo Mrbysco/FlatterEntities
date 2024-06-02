@@ -6,12 +6,11 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.Level;
+import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
-import net.neoforged.fml.IExtensionPoint;
-import net.neoforged.fml.ModLoadingContext;
+import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
-import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.neoforge.common.NeoForge;
 
 import java.util.ArrayList;
@@ -20,19 +19,14 @@ import java.util.List;
 @Mod(Reference.MOD_ID)
 public class FlatterEntities {
 
-	public FlatterEntities(IEventBus eventBus) {
-		if (FMLEnvironment.dist.isClient()) {
-			ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, FlatConfig.clientSpec);
+	public FlatterEntities(IEventBus eventBus, ModContainer container, Dist dist) {
+		if (dist.isClient()) {
+			container.registerConfig(ModConfig.Type.CLIENT, FlatConfig.clientSpec);
 			eventBus.register(FlatConfig.class);
 
 			eventBus.addListener(Keybinds::registerKeybinds);
 			NeoForge.EVENT_BUS.register(new Keybinds());
 		}
-
-		//Make sure the mod being absent on the other network side does not cause the client to display the server as incompatible
-		ModLoadingContext.get().registerExtensionPoint(IExtensionPoint.DisplayTest.class, () ->
-				new IExtensionPoint.DisplayTest(() -> "Trans Rights Are Human Rights",
-						(remoteVersionString, networkBool) -> networkBool));
 	}
 
 	public static void reloadCache() {
