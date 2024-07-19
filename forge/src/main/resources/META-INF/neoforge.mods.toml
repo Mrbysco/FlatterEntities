@@ -1,5 +1,5 @@
 modLoader="javafml"
-loaderVersion="[3,)"
+loaderVersion="[4,)"
 issueTrackerURL="https://github.com/Mrbysco/flatterentities/issues"
 license="GNU Lesser General Public License v3.0"
 
@@ -15,10 +15,10 @@ Entities but more flat
 [[dependencies.flatterentities]]
 modId="minecraft"
 type="REQUIRED"
-versionRange="[1.20.6,1.21)"
+versionRange="[1.21,1.22)"
 ordering="NONE"
 side="BOTH"
 [[mixins]]
-config = "flatterentities.forge.mixins.json"
+config = "flatterentities.neoforge.mixins.json"
 [[mixins]]
-config = "flatterentities.gecko.forge.mixins.json"
+config = "flatterentities.gecko.neoforge.mixins.json"

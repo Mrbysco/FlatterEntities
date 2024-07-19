@@ -24,14 +24,14 @@ import software.bernie.geckolib.cache.object.BakedGeoModel;
 @Mixin(software.bernie.geckolib.renderer.GeoEntityRenderer.class)
 public class GeoEntityRendererMixin<T extends Entity & GeoAnimatable> {
 
-	@Inject(method = "actuallyRender(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/world/entity/Entity;Lsoftware/bernie/geckolib/cache/object/BakedGeoModel;Lnet/minecraft/client/renderer/RenderType;Lnet/minecraft/client/renderer/MultiBufferSource;Lcom/mojang/blaze3d/vertex/VertexConsumer;ZFIIFFFF)V",
+	@Inject(method = "actuallyRender(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/world/entity/Entity;Lsoftware/bernie/geckolib/cache/object/BakedGeoModel;Lnet/minecraft/client/renderer/RenderType;Lnet/minecraft/client/renderer/MultiBufferSource;Lcom/mojang/blaze3d/vertex/VertexConsumer;ZFIII)V",
 			remap = false,
 			locals = LocalCapture.NO_CAPTURE, at = @At(
 			value = "INVOKE",
 			target = "Lcom/mojang/blaze3d/vertex/PoseStack;translate(FFF)V",
 			shift = Shift.AFTER,
 			ordinal = 1))
-	public void flatterActuallyRender(PoseStack poseStack, T entityIn, BakedGeoModel model, RenderType renderType, MultiBufferSource bufferSource, VertexConsumer buffer, boolean isReRender, float partialTicks, int packedLight, int packedOverlay, float red, float green, float blue, float alpha, CallbackInfo ci) {
+	public void flatterActuallyRender(PoseStack poseStack, T entityIn, BakedGeoModel model, RenderType renderType, MultiBufferSource bufferSource, VertexConsumer buffer, boolean isReRender, float partialTicks, int packedLight, int packedOverlay, int color, CallbackInfo ci) {
 		if (entityIn instanceof LivingEntity livingEntity) {
 			final boolean shouldSit = entityIn.isPassenger();
 			float f = Mth.rotLerp(partialTicks, livingEntity.yBodyRotO, livingEntity.yBodyRot);
