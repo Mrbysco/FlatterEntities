@@ -7,5 +7,12 @@
   "text.autoconfig.flatterentities.option.client.entityBlacklist" : "Entity Blacklist",
   "text.autoconfig.flatterentities.option.client.entityDimensionWhitelist" : "Entity Dimension Whitelist",
   "text.autoconfig.flatterentities.option.client.dimensionBlacklist" : "Dimension Blacklist",
-  "text.autoconfig.flatterentities.option.client.invertDimensionBlacklist" : "Invert Dimension Blacklist"
+  "text.autoconfig.flatterentities.option.client.invertDimensionBlacklist" : "Invert Dimension Blacklist",
+
+  "flatterentities.configuration.title": "Flatter Entities",
+  "flatterentities.configuration.client": "Client",
+  "flatterentities.configuration.entityBlacklist": "Entity Blacklist",
+  "flatterentities.configuration.entityDimensionWhitelist": "Entity Dimension Whitelist",
+  "flatterentities.configuration.dimensionBlacklist": "Dimension Blacklist",
+  "flatterentities.configuration.invertDimensionBlacklist": "Invert Dimension Blacklist"
 }
