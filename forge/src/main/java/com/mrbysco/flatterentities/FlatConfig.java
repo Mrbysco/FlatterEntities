@@ -1,9 +1,9 @@
 package com.mrbysco.flatterentities;
 
 import net.minecraft.resources.ResourceLocation;
-import net.neoforged.neoforge.common.ModConfigSpec;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.event.config.ModConfigEvent;
+import net.neoforged.neoforge.common.ModConfigSpec;
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.Collections;
@@ -23,20 +23,20 @@ public class FlatConfig {
 			entityBlacklist = builder
 					.comment("A list of entities that won't show flat ever [Syntax: \"modid:entity\" ]\n" +
 							"[Example: \"minecraft:cow\"]")
-					.defineListAllowEmpty(Collections.singletonList("entityBlacklist"), () -> Collections.singletonList(""),
-							FlatConfig::isValidResourceLocation);
+					.defineListAllowEmpty("entityBlacklist", () -> Collections.singletonList(""),
+							String::new, FlatConfig::isValidResourceLocation);
 
 			entityDimensionWhitelist = builder
 					.comment("A list of entities that will show flat even when a dimension is blacklisted [Syntax: \"modid:entity,modid:dimension\" ]\n" +
 							"[Example: \"minecraft:bee,minecraft:the_nether\"]")
-					.defineListAllowEmpty(Collections.singletonList("entityDimensionWhitelist"), () -> Collections.singletonList(""),
-							FlatConfig::isValidOption);
+					.defineListAllowEmpty("entityDimensionWhitelist", () -> Collections.singletonList(""),
+							String::new, FlatConfig::isValidOption);
 
 			dimensionBlacklist = builder
 					.comment("A list of dimensions that won't have flat entities [Syntax: \"modid:dimension\" ]\n" +
 							"[Example: \"minecraft:the_nether\"]")
-					.defineListAllowEmpty(Collections.singletonList("dimensionBlacklist"), () -> Collections.singletonList(""),
-							FlatConfig::isValidResourceLocation);
+					.defineListAllowEmpty("dimensionBlacklist", () -> Collections.singletonList(""),
+							String::new, FlatConfig::isValidResourceLocation);
 
 			invertDimensionBlacklist = builder
 					.comment("Invert the Dimension Blacklist")
