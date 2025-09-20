@@ -4,6 +4,8 @@
   "package": "com.mrbysco.flatterentities.mixin",
   "compatibilityLevel": "JAVA_21",
   "client": [
+    "EntityRendererMixin",
+    "EntityRenderStateMixin",
     "BoatRendererMixin",
     "EndCrystalRendererMixin",
     "EnderDragonRendererMixin",

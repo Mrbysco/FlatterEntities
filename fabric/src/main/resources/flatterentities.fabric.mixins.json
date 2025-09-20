@@ -5,6 +5,8 @@
   "refmap": "flatterentities.refmap.json",
   "compatibilityLevel": "JAVA_21",
   "client": [
+    "EntityRendererMixin",
+    "EntityRenderStateMixin",
     "BoatRendererMixin",
     "EndCrystalRendererMixin",
     "EnderDragonRendererMixin",

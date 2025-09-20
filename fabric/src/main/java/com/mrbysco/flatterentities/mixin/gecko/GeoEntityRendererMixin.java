@@ -6,12 +6,14 @@ import com.mrbysco.flatterentities.Flattener;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.entity.state.EntityRenderState;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Pseudo;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.At.Shift;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -22,7 +24,10 @@ import software.bernie.geckolib.cache.object.BakedGeoModel;
 
 @Pseudo
 @Mixin(software.bernie.geckolib.renderer.GeoEntityRenderer.class)
-public class GeoEntityRendererMixin<T extends Entity & GeoAnimatable> {
+public abstract class GeoEntityRendererMixin<T extends Entity & GeoAnimatable> {
+
+	@Shadow
+	public abstract EntityRenderState getEntityRenderState();
 
 	@Inject(method = "actuallyRender(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/world/entity/Entity;Lsoftware/bernie/geckolib/cache/object/BakedGeoModel;Lnet/minecraft/client/renderer/RenderType;Lnet/minecraft/client/renderer/MultiBufferSource;Lcom/mojang/blaze3d/vertex/VertexConsumer;ZFIII)V",
 			remap = false,
@@ -62,7 +67,7 @@ public class GeoEntityRendererMixin<T extends Entity & GeoAnimatable> {
 				z -= player.getZ();
 			}
 
-			Flattener.prepareFlatRendering(f, x, z, poseStack, entityIn);
+			Flattener.prepareFlatRendering(f, x, z, poseStack, getEntityRenderState());
 		}
 	}
 }

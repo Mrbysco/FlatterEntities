@@ -38,7 +38,7 @@ public class FlatterEntities {
 			if (!value.isEmpty()) {
 				ResourceLocation resourceLocation = ResourceLocation.tryParse(value);
 				if (resourceLocation != null) {
-					EntityType<?> entityType = BuiltInRegistries.ENTITY_TYPE.get(resourceLocation);
+					EntityType<?> entityType = BuiltInRegistries.ENTITY_TYPE.getValue(resourceLocation);
 					if (entityType != null) {
 						Flattener.entityBlacklist.add(entityType);
 					} else {
@@ -57,7 +57,7 @@ public class FlatterEntities {
 					ResourceLocation entityLocation = ResourceLocation.tryParse(splitValue[0]);
 					ResourceLocation worldLocation = ResourceLocation.tryParse(splitValue[1]);
 					if (entityLocation != null && worldLocation != null) {
-						EntityType<?> entityType = BuiltInRegistries.ENTITY_TYPE.get(entityLocation);
+						EntityType<?> entityType = BuiltInRegistries.ENTITY_TYPE.getValue(entityLocation);
 						if (entityType != null) {
 							ResourceKey<Level> worldKey = ResourceKey.create(Registries.DIMENSION, worldLocation);
 							List<EntityType<?>> entityList = Flattener.entityDimensionWhitelist.getOrDefault(worldKey, new ArrayList<>());
