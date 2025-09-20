@@ -1,1 +1,1 @@
-* Enable in-game config (NeoForge)
+* Update to 1.21.4
