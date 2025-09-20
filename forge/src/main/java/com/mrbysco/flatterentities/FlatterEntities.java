@@ -11,6 +11,8 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
+import net.neoforged.neoforge.client.gui.ConfigurationScreen;
+import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
 import net.neoforged.neoforge.common.NeoForge;
 
 import java.util.ArrayList;
@@ -22,6 +24,7 @@ public class FlatterEntities {
 	public FlatterEntities(IEventBus eventBus, ModContainer container, Dist dist) {
 		if (dist.isClient()) {
 			container.registerConfig(ModConfig.Type.CLIENT, FlatConfig.clientSpec);
+			container.registerExtensionPoint(IConfigScreenFactory.class, ConfigurationScreen::new);
 			eventBus.register(FlatConfig.class);
 
 			eventBus.addListener(Keybinds::registerKeybinds);
