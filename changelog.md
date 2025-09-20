@@ -1,1 +1,1 @@
-* Initial update to 1.21
+* Enable in-game config (NeoForge)
