@@ -3,7 +3,7 @@ plugins {
     id 'eclipse'
     id 'idea'
     id 'maven-publish'
-    id 'net.neoforged.gradle.userdev' version '7.0.181'
+    id "net.neoforged.moddev" version "2.0.107"
     id 'net.darkhax.curseforgegradle'
     id 'com.modrinth.minotaur'
 }
@@ -12,39 +12,54 @@ base {
     archivesName = "${mod_name}-neoforge-${minecraft_version}"
 }
 
-if (file('src/main/resources/META-INF/accesstransformer.cfg').exists()) {
-    minecraft.accessTransformers.file rootProject.file('src/main/resources/META-INF/accesstransformer.cfg')
-}
+neoForge {
+    version = "${neo_version}"
 
-runs {
-    // applies to all the run configs below
-    configureEach {
-        // Recommended logging data for a userdev environment
-        systemProperty 'forge.logging.markers', 'REGISTRIES'
-
-        // Recommended logging level for the console
-        systemProperty 'forge.logging.console.level', 'debug'
-
-        //Limit ram usage for the dev environment to 4GB
-        jvmArgument '-Xmx4G'
-
-        systemProperty 'mixin.env.disableRefMap', 'true'
-
-        modSource project.sourceSets.main
+    parchment {
+        minecraftVersion = "${parchment_minecraft_version}"
+        mappingsVersion = "${parchment_mapping_version}"
     }
 
-    client {
-        // Comma-separated list of namespaces to load gametests from. Empty = all namespaces.
-        systemProperty 'forge.enabledGameTestNamespaces', "${mod_id}"
+    // Automatically enable neoforge AccessTransformers if the file exists
+    def at = project(':common').file('src/main/resources/META-INF/accesstransformer.cfg')
+    if (at.exists()) {
+        accessTransformers.add(at.absolutePath)
     }
 
-    server {
-        systemProperty 'forge.enabledGameTestNamespaces', "${mod_id}"
-        programArgument '--nogui'
+    runs {
+        configureEach { model ->
+            systemProperty 'forge.logging.console.level', 'debug'
+            systemProperty 'fml.earlyprogresswindow', 'false'
+
+            //Limit ram usage for the dev environment to 4GB
+            jvmArguments.add('-Xmx4G')
+
+            if (model.project.javaToolchains.launcherFor(java.toolchain).map { it.metadata.vendor }.getOrElse("").contains("JetBrains")) {
+                jvmArguments.add("-XX:+AllowEnhancedClassRedefinition")
+            }
+        }
+
+        client {
+            client()
+        }
+        server {
+            server()
+            programArgument '--nogui'
+        }
+    }
+
+    mods {
+        "${mod_id}" {
+            sourceSet sourceSets.main
+        }
     }
 }
 
 sourceSets.main.resources.srcDir 'src/generated/resources'
+
+configurations {
+    runtimeClasspath.extendsFrom localRuntime
+}
 
 dependencies {
     implementation "net.neoforged:neoforge:${neo_version}"
@@ -54,22 +69,15 @@ dependencies {
 //    runtimeOnly "mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}"
 }
 
-// NeoGradle compiles the game, but we don't want to add our common code to the game's code
-Spec<Task> notNeoTask = { Task it -> !it.name.startsWith("neo") } as Spec<Task>
-
-tasks.withType(JavaCompile).matching(notNeoTask).configureEach {
+compileJava {
     source(project(":common").sourceSets.main.allSource)
 }
 
-tasks.withType(Javadoc).matching(notNeoTask).configureEach {
-    source(project(":common").sourceSets.main.allJava)
+sourcesJar {
+    from project(":common").sourceSets.main.allJava
 }
 
-tasks.named("sourcesJar", Jar) {
-    from(project(":common").sourceSets.main.allSource)
-}
-
-tasks.withType(ProcessResources).matching(notNeoTask).configureEach {
+processResources {
     from project(":common").sourceSets.main.resources
 }
 
@@ -104,10 +112,13 @@ if (System.getenv().CURSEFORGE_KEY) {
         mainFile.addGameVersion "NeoForge"
         mainFile.addGameVersion "${minecraft_version}"
         mainFile.addGameVersion "Java 21"
-        mainFile.addGameVersion('Client')
+        mainFile.addEnvironment('Client')
 
         mainFile.changelog = file("$project.rootDir/changelog.md")
         mainFile.changelogType = 'markdown'
+
+//        mainFile.addRequirement()
+//        mainFile.addOptional()
     }
 }
 
@@ -122,5 +133,9 @@ if (System.getenv().MODRINTH_KEY) {
         changelog = file("$project.rootDir/changelog.md").text
         gameVersions = ["${minecraft_version}"]
         loaders = ["neoforge"]
+
+        dependencies {
+
+        }
     }
 }
