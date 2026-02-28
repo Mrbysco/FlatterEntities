@@ -1,6 +1,6 @@
 package com.mrbysco.flatterentities;
 
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.event.config.ModConfigEvent;
 import net.neoforged.neoforge.common.ModConfigSpec;
@@ -53,7 +53,7 @@ public class FlatConfig {
 			if (value.isEmpty()) {
 				return true;
 			} else {
-				return ResourceLocation.tryParse(value) != null;
+				return Identifier.tryParse(value) != null;
 			}
 		}
 		return false;
@@ -69,7 +69,7 @@ public class FlatConfig {
 				if (value.contains(",")) {
 					String[] splitValue = value.split(",");
 					if (splitValue.length == 2) {
-						return ResourceLocation.tryParse(splitValue[0]) != null && ResourceLocation.tryParse(splitValue[1]) != null;
+						return Identifier.tryParse(splitValue[0]) != null && Identifier.tryParse(splitValue[1]) != null;
 					}
 				}
 			}

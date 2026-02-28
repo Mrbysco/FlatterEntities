@@ -15,7 +15,7 @@ Entities but more flat
 [[dependencies.flatterentities]]
 modId="minecraft"
 type="REQUIRED"
-versionRange="[1.21.7,1.22)"
+versionRange="[1.21.11,1.22)"
 ordering="NONE"
 side="BOTH"
 [[mixins]]

@@ -4,8 +4,8 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import net.minecraft.client.CameraType;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.entity.state.AvatarRenderState;
 import net.minecraft.client.renderer.entity.state.EntityRenderState;
-import net.minecraft.client.renderer.entity.state.PlayerRenderState;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.EntityType;
@@ -41,7 +41,7 @@ public class Flattener {
 			// Extract entity and dimension information
 			final EntityType<?> entityType = info.flatterentities$getEntityType();
 			final ResourceKey<Level> entityDimension = info.flatterentities$getDimension();
-			final boolean isPlayer = renderState instanceof PlayerRenderState;
+			final boolean isPlayer = renderState instanceof AvatarRenderState;
 
 			// Check if entity and dimension are blacklisted
 			final boolean entityInList = entityBlacklist.contains(entityType);
@@ -68,7 +68,7 @@ public class Flattener {
 
 				// Adjust offset for player's head rotation
 				if (isPlayer) {
-					offset = ((PlayerRenderState) renderState).yRot;
+					offset = ((AvatarRenderState) renderState).yRot;
 					//Mth.wrapDegrees(player.yHeadRot - player.yHeadRotO);
 				}
 

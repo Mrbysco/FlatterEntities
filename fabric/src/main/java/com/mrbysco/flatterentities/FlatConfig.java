@@ -4,7 +4,7 @@ import me.shedaniel.autoconfig.ConfigData;
 import me.shedaniel.autoconfig.annotation.Config;
 import me.shedaniel.autoconfig.annotation.ConfigEntry.Gui.CollapsibleObject;
 import me.shedaniel.cloth.clothconfig.shadowed.blue.endless.jankson.Comment;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +33,7 @@ public class FlatConfig implements ConfigData {
 	}
 
 	private static boolean isValidResourceLocation(String configValue) {
-		return configValue.isEmpty() || ResourceLocation.tryParse(configValue) != null;
+		return configValue.isEmpty() || Identifier.tryParse(configValue) != null;
 	}
 
 	public static boolean isValidOption(String configValue) {
@@ -44,7 +44,7 @@ public class FlatConfig implements ConfigData {
 			if (value.contains(",")) {
 				String[] splitValue = value.split(",");
 				if (splitValue.length == 2) {
-					return ResourceLocation.tryParse(splitValue[0]) != null && ResourceLocation.tryParse(splitValue[1]) != null;
+					return Identifier.tryParse(splitValue[0]) != null && Identifier.tryParse(splitValue[1]) != null;
 				}
 			}
 		}

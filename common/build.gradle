@@ -2,7 +2,7 @@ plugins {
     id 'idea'
     id 'java'
     id 'maven-publish'
-    id "net.neoforged.moddev" version "2.0.107"
+    id "net.neoforged.moddev" version "2.0.140"
 }
 
 base {
@@ -16,9 +16,9 @@ neoForge {
     // common and neoforge to share an accesstransformer file
     // and this location is hardcoded in FML
     // https://github.com/neoforged/FancyModLoader/blob/a952595eaaddd571fbc53f43847680b00894e0c1/loader/src/main/java/net/neoforged/fml/loading/moddiscovery/ModFile.java#L118
-    def at = file('src/main/resources/META-INF/accesstransformer.cfg')
+    def at = project(":forge").file('src/main/resources/META-INF/accesstransformer.cfg')
     if (at.exists()) {
-        accessTransformers.add(at.absolutePath)
+        accessTransformers.from(at.absolutePath)
     }
     parchment {
         minecraftVersion = "${parchment_minecraft_version}"
@@ -26,11 +26,14 @@ neoForge {
     }
 }
 
+sourceSets.main.resources.srcDir 'src/generated/resources'
+
 dependencies {
-    compileOnly group: 'org.spongepowered', name: 'mixin', version: '0.8.5'
+    compileOnly "net.fabricmc:sponge-mixin:${mixin_version}"
     // fabric and neoforge both bundle mixinextras, so it is safe to use it in common
-    compileOnly group: 'io.github.llamalad7', name: 'mixinextras-common', version: '0.3.5'
-    annotationProcessor group: 'io.github.llamalad7', name: 'mixinextras-common', version: '0.3.5'
+    compileOnly group: 'io.github.llamalad7', name: 'mixinextras-common', version: "${mixinextras_version}"
+    annotationProcessor group: 'io.github.llamalad7', name: 'mixinextras-common', version: "${mixinextras_version}"
+
     compileOnly "software.bernie.geckolib:geckolib-common-${minecraft_version}:${gecko_version}"
 }
 
@@ -43,6 +46,7 @@ publishing {
             from components.java
         }
     }
+
     repositories {
         if (System.getenv().SAP_SECRET) {
             maven {

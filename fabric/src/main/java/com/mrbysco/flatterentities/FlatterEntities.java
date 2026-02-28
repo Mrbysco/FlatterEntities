@@ -8,7 +8,7 @@ import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.Level;
@@ -38,7 +38,7 @@ public class FlatterEntities implements ClientModInitializer {
 		Flattener.entityBlacklist.clear();
 		for (String value : config.client.entityBlacklist) {
 			if (!value.isEmpty()) {
-				ResourceLocation resourceLocation = ResourceLocation.tryParse(value);
+				Identifier resourceLocation = Identifier.tryParse(value);
 				if (resourceLocation != null) {
 					EntityType<?> entityType = BuiltInRegistries.ENTITY_TYPE.getValue(resourceLocation);
 					if (entityType != null) {
@@ -56,8 +56,8 @@ public class FlatterEntities implements ClientModInitializer {
 			if (value.contains(",")) {
 				String[] splitValue = value.split(",");
 				if (splitValue.length == 2) {
-					ResourceLocation entityLocation = ResourceLocation.tryParse(splitValue[0]);
-					ResourceLocation worldLocation = ResourceLocation.tryParse(splitValue[1]);
+					Identifier entityLocation = Identifier.tryParse(splitValue[0]);
+					Identifier worldLocation = Identifier.tryParse(splitValue[1]);
 					if (entityLocation != null && worldLocation != null) {
 						EntityType<?> entityType = BuiltInRegistries.ENTITY_TYPE.getValue(entityLocation);
 						if (entityType != null) {
@@ -77,7 +77,7 @@ public class FlatterEntities implements ClientModInitializer {
 		Flattener.dimensionBlacklist.clear();
 		for (String value : config.client.dimensionBlacklist) {
 			if (!value.isEmpty()) {
-				ResourceLocation resourceLocation = ResourceLocation.tryParse(value);
+				Identifier resourceLocation = Identifier.tryParse(value);
 				if (resourceLocation != null) {
 					ResourceKey<Level> worldKey = ResourceKey.create(Registries.DIMENSION, resourceLocation);
 					Flattener.dimensionBlacklist.add(worldKey);
