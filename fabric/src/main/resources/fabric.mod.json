@@ -13,7 +13,7 @@
     "issues": "https://github.com/Mrbysco/FlatterEntities/issues"
   },
   "license": "MIT",
-  "environment": "*",
+  "environment": "client",
   "entrypoints": {
     "client": [
       "com.mrbysco.flatterentities.FlatterEntities"
@@ -27,11 +27,11 @@
     "flatterentities.gecko.fabric.mixins.json"
   ],
   "depends": {
-    "fabricloader": ">=0.18.2",
-    "minecraft": "~1.21.11",
-    "java": ">=21",
+    "fabricloader": ">=0.18.4",
+    "minecraft": "~26.1.1",
+    "java": ">=25",
     "fabric-api": "*",
-    "cloth-config": ">=21"
+    "forgeconfigapiport": ">=26.1"
   }
 }
   

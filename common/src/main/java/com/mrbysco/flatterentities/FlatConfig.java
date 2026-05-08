@@ -1,11 +1,15 @@
 package com.mrbysco.flatterentities;
 
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.Identifier;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.event.config.ModConfigEvent;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.common.ModConfigSpec;
 import org.apache.commons.lang3.tuple.Pair;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -86,20 +90,57 @@ public class FlatConfig {
 		CLIENT = specPair.getLeft();
 	}
 
-	@SubscribeEvent
-	public static void onLoad(final ModConfigEvent.Loading configEvent) {
-		Reference.LOGGER.debug("Loaded Flatter Entities' config file {}", configEvent.getConfig().getFileName());
-	}
+	public static void reloadCache() {
+		Flattener.entityBlacklist.clear();
+		for (String value : FlatConfig.CLIENT.entityBlacklist.get()) {
+			if (!value.isEmpty()) {
+				Identifier resourceLocation = Identifier.tryParse(value);
+				if (resourceLocation != null) {
+					EntityType<?> entityType = BuiltInRegistries.ENTITY_TYPE.getValue(resourceLocation);
+					if (entityType != null) {
+						Flattener.entityBlacklist.add(entityType);
+					} else {
+						Reference.LOGGER.error("Invalid entity blacklist value: {}, Unable to locate entity", value);
+					}
+				} else {
+					Reference.LOGGER.error("Invalid entity blacklist value: {}, Are you sure this is the resource location of the entity?", value);
+				}
+			}
+		}
+		Flattener.entityDimensionWhitelist.clear();
+		for (String value : FlatConfig.CLIENT.entityDimensionWhitelist.get()) {
+			if (value.contains(",")) {
+				String[] splitValue = value.split(",");
+				if (splitValue.length == 2) {
+					Identifier entityLocation = Identifier.tryParse(splitValue[0]);
+					Identifier worldLocation = Identifier.tryParse(splitValue[1]);
+					if (entityLocation != null && worldLocation != null) {
+						EntityType<?> entityType = BuiltInRegistries.ENTITY_TYPE.getValue(entityLocation);
+						if (entityType != null) {
+							ResourceKey<Level> worldKey = ResourceKey.create(Registries.DIMENSION, worldLocation);
+							List<EntityType<?>> entityList = Flattener.entityDimensionWhitelist.getOrDefault(worldKey, new ArrayList<>());
+							entityList.add(entityType);
+							Flattener.entityDimensionWhitelist.put(worldKey, entityList);
+						} else {
+							Reference.LOGGER.error("Invalid entity dimension whitelist value: {}, Unable to locate entity", value);
+						}
+					}
+				}
+			}
+		}
 
-	@SubscribeEvent
-	public static void onFileChange(final ModConfigEvent.Reloading configEvent) {
-		Reference.LOGGER.warn("Flatter Entities' config just got changed on the file system!");
-	}
-
-	@SubscribeEvent
-	public static void onReload(final ModConfigEvent configEvent) {
-		if (configEvent.getConfig().getModId().equals(Reference.MOD_ID)) {
-			FlatterEntities.reloadCache();
+		Flattener.dimensionListIsWhitelist = FlatConfig.CLIENT.invertDimensionBlacklist.get();
+		Flattener.dimensionBlacklist.clear();
+		for (String value : FlatConfig.CLIENT.dimensionBlacklist.get()) {
+			if (!value.isEmpty()) {
+				Identifier resourceLocation = Identifier.tryParse(value);
+				if (resourceLocation != null) {
+					ResourceKey<Level> worldKey = ResourceKey.create(Registries.DIMENSION, resourceLocation);
+					Flattener.dimensionBlacklist.add(worldKey);
+				} else {
+					Reference.LOGGER.error("Invalid dimension blacklist value: {}, Are you sure this is the resource location of the dimension?", value);
+				}
+			}
 		}
 	}
 }

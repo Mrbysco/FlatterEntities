@@ -3,7 +3,7 @@ plugins {
     id 'eclipse'
     id 'idea'
     id 'maven-publish'
-    id "net.neoforged.moddev" version "2.0.140"
+    id "net.neoforged.moddev" version "2.0.141"
     id 'net.darkhax.curseforgegradle'
     id 'com.modrinth.minotaur'
 }
@@ -15,15 +15,10 @@ base {
 neoForge {
     version = "${neo_version}"
 
-    parchment {
-        minecraftVersion = "${parchment_minecraft_version}"
-        mappingsVersion = "${parchment_mapping_version}"
-    }
-
     // Automatically enable neoforge AccessTransformers if the file exists
-    def at = project(':common').file('src/main/resources/META-INF/accesstransformer.cfg')
+    def at = project(":forge").file('src/main/resources/META-INF/accesstransformer.cfg')
     if (at.exists()) {
-        accessTransformers.add(at.absolutePath)
+        accessTransformers.from(at.absolutePath)
     }
 
     runs {
@@ -62,12 +57,10 @@ configurations {
 }
 
 dependencies {
-    implementation "net.neoforged:neoforge:${neo_version}"
     compileOnly project(":common")
 
-    compileOnly "software.bernie.geckolib:geckolib-neoforge-${minecraft_version}:${gecko_version}"
-    localRuntime "software.bernie.geckolib:geckolib-neoforge-${minecraft_version}:${gecko_version}"
-//    runtimeOnly "mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}"
+//    compileOnly "software.bernie.geckolib:geckolib-neoforge-${minecraft_version}:${gecko_version}"
+//    localRuntime "software.bernie.geckolib:geckolib-neoforge-${minecraft_version}:${gecko_version}"
 }
 
 compileJava {
@@ -112,14 +105,11 @@ if (System.getenv().CURSEFORGE_KEY) {
         mainFile.releaseType = 'release'
         mainFile.addGameVersion "NeoForge"
         mainFile.addGameVersion "${minecraft_version}"
-        mainFile.addGameVersion "Java 21"
+        mainFile.addGameVersion "Java 25"
         mainFile.addEnvironment('Client')
 
         mainFile.changelog = file("$project.rootDir/changelog.md")
         mainFile.changelogType = 'markdown'
-
-//        mainFile.addRequirement()
-//        mainFile.addOptional()
     }
 }
 
@@ -134,9 +124,5 @@ if (System.getenv().MODRINTH_KEY) {
         changelog = file("$project.rootDir/changelog.md").text
         gameVersions = ["${minecraft_version}"]
         loaders = ["neoforge"]
-
-        dependencies {
-
-        }
     }
 }
